@@ -16,7 +16,7 @@ export function HomeHeader() {
           color={THEME.colors.WHITE}
           paddingLeft={1}
           fontFamily={THEME.fontFamily.Roboto.REGULAR}
-          fontSize={THEME.fontSize.TEXT.XS}
+          fontSize={THEME.fontSize.TEXT.SM}
         >
           Porto Alegre, RS
         </Text>
