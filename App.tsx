@@ -1,6 +1,8 @@
 import { NativeBaseProvider } from 'native-base'
 import { StatusBar, Text } from 'react-native'
 
+import { THEME } from './src/theme'
+
 import { Home } from '@screens/Home'
 
 import {
@@ -18,7 +20,7 @@ export default function App() {
   })
 
   return (
-    <NativeBaseProvider>
+    <NativeBaseProvider theme={THEME}>
       <StatusBar
         barStyle="light-content"
         backgroundColor="transparent"
