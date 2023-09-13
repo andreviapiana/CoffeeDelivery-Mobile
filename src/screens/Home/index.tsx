@@ -3,7 +3,7 @@ import { THEME } from '@theme'
 
 import { HomeHeader } from '@components/HomeHeader'
 import { Search } from '@components/Search'
-import { CoffeeCard } from '@components/CoffeeCard'
+import { Carousel } from '@components/Carousel'
 
 import CoffeGrainSvg from '../../assets/coffee_grain.svg'
 
@@ -20,11 +20,11 @@ export function Home() {
         </HStack>
       </VStack>
 
-      <Center marginTop={-82.5}>
-        <CoffeeCard />
+      <Center marginTop={-112}>
+        <Carousel />
       </Center>
 
-      <Text color={THEME.colors.WHITE}>Home</Text>
+      <Text color={THEME.colors.PURPLE_DARK}>Home</Text>
     </VStack>
   )
 }

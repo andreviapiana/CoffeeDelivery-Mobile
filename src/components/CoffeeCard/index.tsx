@@ -1,9 +1,23 @@
 import { Box, HStack, Image, Text, VStack, View } from 'native-base'
 import { THEME } from '@theme'
 
-import CoffeeImg from '../../assets/coffeeTradicional1.png'
+import { ImageSourcePropType } from 'react-native'
 
-export function CoffeeCard() {
+type CoffeeCardProps = {
+  name: string
+  description: string
+  price: number
+  category: string
+  image: ImageSourcePropType
+}
+
+export function CoffeeCard({
+  name,
+  description,
+  price,
+  category,
+  image,
+}: CoffeeCardProps) {
   return (
     <VStack
       height={262}
@@ -20,10 +34,9 @@ export function CoffeeCard() {
       alignItems={'center'}
     >
       <Image
-        source={CoffeeImg}
+        source={image}
         width={120}
         height={120}
-        defaultSource={CoffeeImg}
         alt="Foto do copo de café"
         resizeMode="contain"
         position="absolute"
@@ -44,7 +57,7 @@ export function CoffeeCard() {
             fontSize={THEME.fontSize.TEXT.TAG}
             color={THEME.colors.PURPLE}
           >
-            ESPECIAL
+            {category}
           </Text>
         </Box>
 
@@ -56,7 +69,7 @@ export function CoffeeCard() {
             lineHeight={'md'}
             height={26}
           >
-            Irlandês
+            {name}
           </Text>
 
           <Text
@@ -65,7 +78,7 @@ export function CoffeeCard() {
             color={THEME.colors.GRAY400}
             textAlign={'center'}
           >
-            Bebida a base de café, uísque irlandês, açúcar e chantilly
+            {description}
           </Text>
         </View>
 
@@ -88,7 +101,9 @@ export function CoffeeCard() {
             fontSize={THEME.fontSize.TITLE.LG}
             color={THEME.colors.YELLOW_DARK}
           >
-            9,90
+            {new Intl.NumberFormat('pt-BR', {
+              minimumFractionDigits: 2,
+            }).format(price / 100)}
           </Text>
         </HStack>
       </VStack>
