@@ -34,8 +34,8 @@
       "@routes/*": [
         "./src/routes/*"
       ],
-      "@themes/*": [
-        "./src/themes/*"
+      "@theme": [
+        "./src/theme"
       ]
     }
   }

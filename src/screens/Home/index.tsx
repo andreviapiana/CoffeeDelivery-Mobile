@@ -1,19 +1,13 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, VStack } from 'native-base'
+import { THEME } from '@theme'
+
+import { HomeHeader } from '@components/HomeHeader'
 
 export function Home() {
   return (
-    <View style={styles.container}>
-      <Text>Home</Text>
-    </View>
+    <VStack flex={1} pt={44} backgroundColor={THEME.colors.GRAY100}>
+      <HomeHeader />
+      <Text color={THEME.colors.WHITE}>Home</Text>
+    </VStack>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})
