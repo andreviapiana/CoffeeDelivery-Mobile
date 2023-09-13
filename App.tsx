@@ -1,9 +1,10 @@
 import { NativeBaseProvider } from 'native-base'
-import { StatusBar, Text } from 'react-native'
+import { StatusBar } from 'react-native'
 
 import { THEME } from './src/theme'
 
 import { Home } from '@screens/Home'
+import { Loading } from '@components/Loading'
 
 import {
   useFonts,
@@ -26,7 +27,7 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fontsLoaded ? <Home /> : <Text>Hello World</Text>}
+      {fontsLoaded ? <Home /> : <Loading />}
     </NativeBaseProvider>
   )
 }
