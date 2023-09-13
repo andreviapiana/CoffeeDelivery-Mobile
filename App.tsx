@@ -1,3 +1,4 @@
+import { NativeBaseProvider } from 'native-base'
 import { StatusBar, Text } from 'react-native'
 
 import { Home } from '@screens/Home'
@@ -17,13 +18,13 @@ export default function App() {
   })
 
   return (
-    <>
+    <NativeBaseProvider>
       <StatusBar
         barStyle="light-content"
         backgroundColor="transparent"
         translucent
       />
       {fontsLoaded ? <Home /> : <Text>Hello World</Text>}
-    </>
+    </NativeBaseProvider>
   )
 }
