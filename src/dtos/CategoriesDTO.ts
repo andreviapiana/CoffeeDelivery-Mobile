@@ -1,1 +1,1 @@
-export type Category = 'TRADICIONAL' | 'DOCE' | 'ESPECIAL'
+export type CategoryDTO = 'TRADICIONAL' | 'DOCE' | 'ESPECIAL'
