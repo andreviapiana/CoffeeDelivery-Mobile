@@ -1,4 +1,4 @@
-import { Center, HStack, VStack } from 'native-base'
+import { Center, HStack, ScrollView, VStack } from 'native-base'
 import { useEffect, useState } from 'react'
 
 import { THEME } from '@theme'
@@ -7,6 +7,7 @@ import { HomeHeader } from '@components/HomeHeader'
 import { Search } from '@components/Search'
 import { Carousel } from '@components/Carousel'
 import { CategoryFilter } from '@components/CategoryFilter'
+import { CoffeeMenu } from '@components/CoffeeMenu'
 
 import CoffeGrainSvg from '../../assets/coffee_grain.svg'
 
@@ -55,6 +56,16 @@ export function Home() {
       </Center>
 
       <CategoryFilter setCategorySelected={setCategorySelected} />
+
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
+        contentContainerStyle={{
+          alignItems: 'center',
+        }}
+      >
+        <CoffeeMenu coffees={listSection} />
+      </ScrollView>
     </VStack>
   )
 }

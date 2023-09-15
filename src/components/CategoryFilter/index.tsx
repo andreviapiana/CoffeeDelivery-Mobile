@@ -24,7 +24,7 @@ export function CategoryFilter({ setCategorySelected }: CategoryFilterProps) {
   }
 
   return (
-    <VStack paddingX={8} marginTop={4}>
+    <VStack paddingX={8} marginTop={4} marginBottom={4}>
       <Text
         fontFamily={THEME.fontFamily.Baloo2.BOLD}
         fontSize={THEME.fontSize.TITLE.SM}
@@ -45,9 +45,7 @@ export function CategoryFilter({ setCategorySelected }: CategoryFilterProps) {
         )}
         horizontal
         showsHorizontalScrollIndicator={false}
-        my={3}
-        maxH={10}
-        minH={10}
+        marginTop={3}
       />
     </VStack>
   )

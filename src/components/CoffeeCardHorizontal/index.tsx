@@ -2,13 +2,18 @@ import { HStack, Image, Text, VStack, View } from 'native-base'
 
 import { THEME } from '@theme'
 
-import tradicionalImg from '../../assets/coffeeTradicional1.png'
+import { CoffeesDTO } from '@dtos/CoffeesDTO'
 
-export function CoffeeCardHorizontal() {
+type CoffeeCardHorizontalProps = {
+  coffee: CoffeesDTO
+}
+
+export function CoffeeCardHorizontal({ coffee }: CoffeeCardHorizontalProps) {
   return (
     <HStack
       height={120}
       width={311}
+      marginTop={8}
       paddingRight={4}
       paddingBottom={13}
       paddingTop={4}
@@ -21,7 +26,7 @@ export function CoffeeCardHorizontal() {
       borderWidth={1}
     >
       <Image
-        source={tradicionalImg}
+        source={coffee.image}
         alt="Foto do copo de café"
         resizeMode="contain"
         position="absolute"
@@ -36,7 +41,7 @@ export function CoffeeCardHorizontal() {
             lineHeight={'md'}
             height={21}
           >
-            Nome do Café
+            {coffee.name}
           </Text>
 
           <Text
@@ -44,7 +49,7 @@ export function CoffeeCardHorizontal() {
             fontSize={THEME.fontSize.TEXT.XS}
             color={THEME.colors.GRAY400}
           >
-            Descrição do Café com 2 linhas completas para teste.
+            {coffee.description}
           </Text>
         </View>
 
@@ -61,7 +66,9 @@ export function CoffeeCardHorizontal() {
             fontSize={THEME.fontSize.TITLE.MD}
             color={THEME.colors.YELLOW_DARK}
           >
-            9,90
+            {new Intl.NumberFormat('pt-BR', {
+              minimumFractionDigits: 2,
+            }).format(coffee.price / 100)}
           </Text>
         </HStack>
       </VStack>
