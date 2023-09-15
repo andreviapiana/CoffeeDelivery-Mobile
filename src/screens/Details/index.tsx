@@ -12,7 +12,7 @@ import { useState } from 'react'
 
 import { THEME } from '@theme'
 
-import { HomeHeader } from '@components/HomeHeader'
+import { Header } from '@components/Header'
 import { QuantitySelector } from '@components/QuantitySelector'
 import { SizeFilter } from '@components/SizeFilter'
 
@@ -35,7 +35,7 @@ export function Details() {
     <VStack flex={1} backgroundColor={THEME.colors.WHITE}>
       <ScrollView>
         <VStack height={575} pt={44} backgroundColor={THEME.colors.GRAY100}>
-          <HomeHeader />
+          <Header variant={'BackButton'} />
 
           <VStack paddingX={8} paddingTop={3} paddingBottom={8}>
             <Box
