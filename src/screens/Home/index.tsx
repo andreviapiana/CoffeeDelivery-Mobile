@@ -16,6 +16,8 @@ import { SectionListCategories } from '@dtos/SectionListCategoriesDTO'
 
 import { getAllCoffeesByCategory } from '@services/getAllCoffeesByCategory'
 
+import { useNavigation } from '@react-navigation/native'
+
 export function Home() {
   // State p/ salvar o botão de filtro ativo que vem lá do CategoryFilter //
   const [categorySelected, setCategorySelected] = useState<CategoryDTO | ''>('')
@@ -24,6 +26,13 @@ export function Home() {
 
   // State p/ Salvar os Cafés com Categoria separada p/ usar na SectionList //
   const [listSection, setListSection] = useState<SectionListCategories[]>([])
+
+  // Navegação p/ a página Details //
+  const navigation = useNavigation()
+
+  function handleDetails() {
+    navigation.navigate('details', { name: 'Teste' })
+  }
 
   // Função de Fetch dos Cafés com Categoria separada //
   function getLoadingData() {
@@ -52,7 +61,7 @@ export function Home() {
       </VStack>
 
       <Center marginTop={-112}>
-        <Carousel />
+        <Carousel onPress={handleDetails} />
       </Center>
 
       <CategoryFilter setCategorySelected={setCategorySelected} />
