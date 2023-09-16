@@ -5,6 +5,8 @@ import { THEME } from '@theme'
 
 import { Ionicons, Feather } from '@expo/vector-icons'
 
+import { useNavigation } from '@react-navigation/native'
+
 type HeaderProps = {
   variant: 'Location' | 'BackButton'
 }
@@ -13,11 +15,11 @@ export function Header({ variant = 'Location' }: HeaderProps) {
   const hasItens = true
 
   // Navegando de volta //
-  /* const navigation = useNavigation<AppNavigatorRoutesProps>()
+  const navigation = useNavigation()
 
   function handleGoBack() {
     navigation.goBack()
-  } */
+  }
 
   return (
     <HStack justifyContent={'space-between'} px={8} py={5}>
@@ -39,9 +41,7 @@ export function Header({ variant = 'Location' }: HeaderProps) {
           </Text>
         </HStack>
       ) : (
-        <TouchableOpacity
-        /* onPress={handleGoBack} */
-        >
+        <TouchableOpacity onPress={handleGoBack}>
           <Icon
             as={Feather}
             name="arrow-left"
