@@ -5,7 +5,6 @@ import { StatusBar } from 'react-native'
 
 import { THEME } from './src/theme'
 
-import { Home } from '@screens/Home'
 import { SplashScreen } from '@screens/SplashScreen'
 
 import { Loading } from '@components/Loading'
@@ -16,6 +15,8 @@ import {
   Roboto_700Bold,
 } from '@expo-google-fonts/roboto'
 import { Baloo2_700Bold } from '@expo-google-fonts/baloo-2'
+
+import { Routes } from '@routes/index'
 
 export default function App() {
   // State p/ Exibir a Splash Screen //
@@ -50,7 +51,7 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fontsLoaded ? <Home /> : <Loading />}
+      {fontsLoaded ? <Routes /> : <Loading />}
     </NativeBaseProvider>
   )
 }
