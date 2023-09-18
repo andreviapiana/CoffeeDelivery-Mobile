@@ -15,9 +15,12 @@ import { THEME } from '@theme'
 import { Header } from '@components/Header'
 import { QuantitySelector } from '@components/QuantitySelector'
 import { SizeFilter } from '@components/SizeFilter'
+import { Button } from '@components/Button'
 
 import CoffeeImg from '../../assets/coffee.png'
 import Smoke3Svg from '../../assets/Smoke3.svg'
+
+import { useNavigation } from '@react-navigation/native'
 
 export function Details() {
   // Opções de tamanho dos Cafés //
@@ -26,9 +29,13 @@ export function Details() {
   // State para Salvar o filtro de Tamanho Selecionado //
   const [groupSelected, setGroupSelected] = useState('')
 
+  // Navegação p/ a página Cart //
+  const navigation = useNavigation()
+
   // Função de adicionar ao carrinho //
   async function handleAddToCart() {
     console.log('Adicionou o café ao carrinho')
+    navigation.navigate('cart')
   }
 
   return (
@@ -154,7 +161,21 @@ export function Details() {
           </View>
         </VStack>
 
-        <QuantitySelector handleConfirm={handleAddToCart} />
+        <HStack
+          height={62}
+          marginX={8}
+          marginTop={5}
+          marginBottom={10}
+          padding={2}
+          space={4}
+          borderRadius={'md'}
+          alignItems={'center'}
+          backgroundColor={THEME.colors.GRAY700}
+        >
+          <QuantitySelector />
+
+          <Button flex={1} title="ADICIONAR" onPress={handleAddToCart} />
+        </HStack>
       </ScrollView>
     </VStack>
   )
