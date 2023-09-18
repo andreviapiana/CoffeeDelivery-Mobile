@@ -8,7 +8,7 @@ import { Ionicons, Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 
 type HeaderProps = {
-  variant: 'Location' | 'BackButton'
+  variant: 'Location' | 'BackButton' | 'Title'
 }
 
 export function Header({ variant = 'Location' }: HeaderProps) {
@@ -21,10 +21,23 @@ export function Header({ variant = 'Location' }: HeaderProps) {
     navigation.goBack()
   }
 
+  // Navegando p/ o Carrinho //
+  function handleGoToCart() {
+    navigation.navigate('cart')
+  }
+
   return (
-    <HStack justifyContent={'space-between'} px={8} py={5}>
+    <HStack
+      px={8}
+      py={5}
+      borderBottomColor={
+        variant === 'Title' ? THEME.colors.GRAY500 : THEME.colors.GRAY100
+      }
+      borderBottomWidth={1}
+      justifyContent={'space-between'}
+    >
       {variant === 'Location' ? (
-        <HStack>
+        <HStack width={'150px'}>
           <Icon
             as={<Ionicons name="location-sharp" />}
             color={THEME.colors.PURPLE}
@@ -45,43 +58,67 @@ export function Header({ variant = 'Location' }: HeaderProps) {
           <Icon
             as={Feather}
             name="arrow-left"
-            color={THEME.colors.WHITE}
+            color={
+              variant === 'BackButton'
+                ? THEME.colors.WHITE
+                : THEME.colors.GRAY200
+            }
             size={6}
           />
         </TouchableOpacity>
       )}
 
-      <TouchableOpacity
-      /* onPress={handleGoToCart} */
-      >
-        <Icon
-          as={<Ionicons name="cart" />}
-          color={
-            variant === 'Location' ? THEME.colors.YELLOW : THEME.colors.WHITE
-          }
-          size={5}
-        />
-
-        {hasItens && (
-          <Circle
-            borderRadius={'full'}
-            width={5}
-            height={5}
-            backgroundColor={THEME.colors.PURPLE}
-            position={'absolute'}
-            right={-16}
-            top={-16}
+      {variant === 'Title' ? (
+        <HStack
+          position={'absolute'}
+          left={'50%'}
+          top={'50%'}
+          bottom={'50%'}
+          alignItems={'center'}
+        >
+          <Text
+            color={THEME.colors.GRAY200}
+            fontFamily={THEME.fontFamily.Baloo2.BOLD}
+            fontSize={THEME.fontSize.TEXT.MD}
           >
-            <Text
-              fontFamily={THEME.fontFamily.Roboto.REGULAR}
-              fontSize={THEME.fontSize.TEXT.XS}
-              color={THEME.colors.WHITE}
-            >
-              2
-            </Text>
-          </Circle>
-        )}
-      </TouchableOpacity>
+            Carrinho
+          </Text>
+        </HStack>
+      ) : (
+        <HStack>
+          <TouchableOpacity onPress={handleGoToCart}>
+            <Icon
+              as={<Ionicons name="cart" />}
+              color={
+                variant === 'Location'
+                  ? THEME.colors.YELLOW
+                  : THEME.colors.WHITE
+              }
+              size={5}
+            />
+
+            {hasItens && (
+              <Circle
+                borderRadius={'full'}
+                width={5}
+                height={5}
+                backgroundColor={THEME.colors.PURPLE}
+                position={'absolute'}
+                right={-16}
+                top={-16}
+              >
+                <Text
+                  fontFamily={THEME.fontFamily.Roboto.REGULAR}
+                  fontSize={THEME.fontSize.TEXT.XS}
+                  color={THEME.colors.WHITE}
+                >
+                  2
+                </Text>
+              </Circle>
+            )}
+          </TouchableOpacity>
+        </HStack>
+      )}
     </HStack>
   )
 }
