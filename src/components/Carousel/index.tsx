@@ -13,14 +13,14 @@ export function Carousel({ onPress }: CarouselProps) {
       data={dataCoffee}
       keyExtractor={(item, index) => `${item}-${index}`}
       renderItem={({ item }) => (
-<CoffeeCard
-  name={item.name}
-  description={item.description}
-  price={item.price}
-  category={item.category}
-  image={item.image}
-  onPress={onPress}
-/>
+        <CoffeeCard
+          name={item.name}
+          description={item.description}
+          price={item.price}
+          category={item.category}
+          image={item.image}
+          onPress={onPress}
+        />
       )}
       horizontal
       showsHorizontalScrollIndicator={false}

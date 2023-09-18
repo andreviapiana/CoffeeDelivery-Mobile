@@ -1,17 +1,10 @@
-import { HStack, Icon, Text, View } from 'native-base'
-import { TouchableOpacity } from 'react-native'
+import { HStack, Icon, IconButton, Text } from 'native-base'
 import { useState } from 'react'
 
 import { THEME } from '@theme'
 import { Feather } from '@expo/vector-icons'
 
-import { Button } from '@components/Button'
-
-type QuantitySelectorProps = {
-  handleConfirm: () => void
-}
-
-export function QuantitySelector({ handleConfirm }: QuantitySelectorProps) {
+export function QuantitySelector() {
   // Quantidade de Itens a adicionar //
   const [quantity, setQuantity] = useState(1)
 
@@ -24,29 +17,22 @@ export function QuantitySelector({ handleConfirm }: QuantitySelectorProps) {
   }
 
   return (
-    <HStack
-      height={62}
-      backgroundColor={THEME.colors.GRAY700}
-      marginTop={5}
-      marginBottom={10}
-      alignItems={'center'}
-      marginX={8}
-      borderRadius={'md'}
-      padding={2}
-      space={4}
-    >
-      <HStack alignItems={'center'} space={3} padding={2}>
-        <TouchableOpacity
+    <HStack alignItems={'center'} borderRadius={'md'}>
+      <HStack alignItems={'center'} height={9} space={2}>
+        <IconButton
+          rounded="sm"
+          padding={2}
+          icon={
+            <Icon
+              as={Feather}
+              name="minus"
+              color={quantity <= 1 ? THEME.colors.GRAY500 : THEME.colors.PURPLE}
+              size={5}
+            />
+          }
           onPress={() => handleQtdCoffee(-1)}
           disabled={quantity <= 1}
-        >
-          <Icon
-            as={Feather}
-            name="minus"
-            color={quantity <= 1 ? THEME.colors.GRAY500 : THEME.colors.PURPLE}
-            size={5}
-          />
-        </TouchableOpacity>
+        />
 
         <Text
           fontFamily={THEME.fontFamily.Roboto.REGULAR}
@@ -56,21 +42,21 @@ export function QuantitySelector({ handleConfirm }: QuantitySelectorProps) {
           {quantity}
         </Text>
 
-        <TouchableOpacity
+        <IconButton
+          rounded="sm"
+          padding={2}
+          icon={
+            <Icon
+              as={Feather}
+              name="plus"
+              color={quantity >= 9 ? THEME.colors.GRAY500 : THEME.colors.PURPLE}
+              size={5}
+            />
+          }
           onPress={() => handleQtdCoffee(+1)}
           disabled={quantity >= 9}
-        >
-          <Icon
-            as={Feather}
-            name="plus"
-            color={quantity >= 9 ? THEME.colors.GRAY500 : THEME.colors.PURPLE}
-            size={5}
-          />
-        </TouchableOpacity>
+        />
       </HStack>
-      <View>
-        <Button title="ADICIONAR" onPress={handleConfirm} />
-      </View>
     </HStack>
   )
 }
