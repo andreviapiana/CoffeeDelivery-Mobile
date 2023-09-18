@@ -5,8 +5,16 @@ import { THEME } from '@theme'
 import { Button } from '@components/Button'
 
 import ScooterSvg from '../../assets/Scooter.svg'
+import { useNavigation } from '@react-navigation/native'
 
 export function Finish() {
+  // Navegação p/ a página Home //
+  const navigation = useNavigation()
+
+  function handleHome() {
+    navigation.navigate('home', {})
+  }
+
   return (
     <Center flex={1} backgroundColor={THEME.colors.WHITE} paddingX={58}>
       <ScooterSvg />
@@ -29,7 +37,7 @@ export function Finish() {
         </Text>
       </VStack>
 
-      <Button title={'IR PARA A HOME'} />
+      <Button title={'IR PARA A HOME'} onPress={handleHome} />
     </Center>
   )
 }
