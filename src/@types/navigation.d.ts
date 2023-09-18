@@ -16,7 +16,7 @@ export declare global {
     interface RootParamList {
       home: HomeRouteProps
       details: DetailsRoutes
-      shopping: undefined
+      cart: undefined
       finish: undefined
     }
   }
