@@ -32,7 +32,7 @@ export default function App() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowSplashScreen(false)
-    }, 3000)
+    }, 5000)
 
     return () => {
       // eslint-disable-next-line no-unused-expressions
