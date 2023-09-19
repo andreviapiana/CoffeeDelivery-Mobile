@@ -1,14 +1,23 @@
 import { SectionList, Text } from 'native-base'
+import { THEME } from '@theme'
 
 import { CoffeeCardHorizontal } from '@components/CoffeeCardHorizontal'
 import { SectionListCategories } from '@dtos/SectionListCategoriesDTO'
-import { THEME } from '@theme'
+
+import { useNavigation } from '@react-navigation/native'
 
 type CoffeeMenuProps = {
   coffees: SectionListCategories[]
 }
 
 export function CoffeeMenu({ coffees }: CoffeeMenuProps) {
+  // Navegação p/ a página Details //
+  const navigation = useNavigation()
+
+  function handleGoToDetails(productId: number) {
+    navigation.navigate('details', { productId })
+  }
+
   return (
     <SectionList
       sections={coffees}
@@ -17,7 +26,7 @@ export function CoffeeMenu({ coffees }: CoffeeMenuProps) {
       renderItem={({ item }) => (
         <CoffeeCardHorizontal
           coffee={item}
-          /* onPress={() => handleGoDetails(item.name)} */
+          onPress={() => handleGoToDetails(item.id)}
         />
       )}
       marginBottom={38}
