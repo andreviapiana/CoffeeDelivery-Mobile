@@ -16,44 +16,47 @@ import { SectionListCategories } from '@dtos/SectionListCategoriesDTO'
 
 import { getAllCoffeesByCategory } from '@services/getAllCoffeesByCategory'
 
-import { useNavigation } from '@react-navigation/native'
-
 export function Home() {
+  // Loading //
+  const [isSearching, setIsSearching] = useState(false)
+
+  // Armazenando o Search //
+  const [search, setSearch] = useState('')
+
   // State p/ salvar o botão de filtro ativo que vem lá do CategoryFilter //
   const [categorySelected, setCategorySelected] = useState<CategoryDTO | ''>('')
-
-  const search = ''
 
   // State p/ Salvar os Cafés com Categoria separada p/ usar na SectionList //
   const [listSection, setListSection] = useState<SectionListCategories[]>([])
 
-  // Navegação p/ a página Details //
-  const navigation = useNavigation()
-
-  function handleDetails() {
-    navigation.navigate('details', { name: 'Teste' })
-  }
-
-  // Função de Fetch dos Cafés com Categoria separada //
+  // Função de Fetch dos Cafés pela categoria ou pelo Search //
   function getLoadingData() {
+    setIsSearching(true)
     const coffeeList = getAllCoffeesByCategory({
       category: categorySelected,
       search,
     })
+    setSearch('')
     setListSection(coffeeList)
+    setIsSearching(false)
   }
 
-  // Disparando a função de Fetch //
+  // Disparando a função de Fetch monitorando o Filter //
   useEffect(() => {
     getLoadingData()
-  }, [search, categorySelected])
+  }, [categorySelected])
 
   return (
     <VStack flex={1} backgroundColor={THEME.colors.WHITE}>
       <VStack height={386} pt={44} backgroundColor={THEME.colors.GRAY100}>
         <Header variant={'Location'} />
 
-        <Search />
+        <Search
+          search={search}
+          setSearch={setSearch}
+          isSearching={isSearching}
+          onPress={getLoadingData}
+        />
 
         <HStack marginRight={1} justifyContent={'flex-end'} marginTop={-5}>
           <CoffeGrainSvg />
@@ -61,7 +64,7 @@ export function Home() {
       </VStack>
 
       <Center marginTop={-112}>
-        <Carousel onPress={handleDetails} />
+        <Carousel />
       </Center>
 
       <CategoryFilter setCategorySelected={setCategorySelected} />

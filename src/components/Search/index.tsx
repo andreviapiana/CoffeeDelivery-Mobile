@@ -5,27 +5,21 @@ import { useState } from 'react'
 
 import { Feather } from '@expo/vector-icons'
 
-export function Search() {
-  // Loading //
-  const [isSearching, setIsSearching] = useState(false)
+type SearchProps = {
+  isSearching: boolean
+  setSearch: (value: string) => void
+  search: string
+  onPress: () => void
+}
 
+export function Search({
+  isSearching,
+  setSearch,
+  search,
+  onPress,
+}: SearchProps) {
   // Armazenando o Status de cor da Lupa baseado no Foco no Input (mudar a cor da lupa) //
   const [isOnFocus, setIsOnFocus] = useState(false)
-
-  // Armazenando o Search //
-  const [searchTerm, setSearchTerm] = useState('')
-
-  // Fetch da Busca //
-  async function handleSearch() {
-    try {
-      setIsSearching(true)
-      console.log(`Buscou por ${searchTerm}`)
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setIsSearching(false)
-    }
-  }
 
   return (
     <VStack px={8} py={5}>
@@ -36,7 +30,6 @@ export function Search() {
       >
         Encontre o café perfeito para qualquer hora do dia
       </Text>
-
       <Input
         mt={15}
         height={42}
@@ -48,9 +41,9 @@ export function Search() {
         borderColor={'transparent'}
         focusOutlineColor={'none'}
         onFocus={() => setIsOnFocus(true)}
-        value={searchTerm}
-        onChangeText={setSearchTerm}
-        onSubmitEditing={handleSearch}
+        value={search}
+        onChangeText={setSearch}
+        onSubmitEditing={onPress}
         InputLeftElement={
           <Flex direction="row" align="center" ml={4}>
             {isSearching ? (
@@ -61,12 +54,12 @@ export function Search() {
                 size={20}
                 color={
                   isOnFocus
-                    ? searchTerm.length > 0
+                    ? search.length > 0
                       ? THEME.colors.YELLOW_DARK
                       : THEME.colors.YELLOW
                     : THEME.colors.GRAY400
                 }
-                onPress={handleSearch}
+                onPress={onPress}
               />
             )}
           </Flex>
