@@ -1,5 +1,5 @@
 import { Center, HStack, ScrollView, VStack } from 'native-base'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { THEME } from '@theme'
 
@@ -15,6 +15,9 @@ import { CategoryDTO } from '@dtos/CategoriesDTO'
 import { SectionListCategories } from '@dtos/SectionListCategoriesDTO'
 
 import { getAllCoffeesByCategory } from '@services/getAllCoffeesByCategory'
+
+import { CoffeesDTO } from '@dtos/CoffeesDTO'
+import { getThreeRandomCoffeesInCarousel } from '@services/getThreeRandomCoffeesInCarousel'
 
 export function Home() {
   // Loading //
@@ -41,10 +44,20 @@ export function Home() {
     setIsSearching(false)
   }
 
+  // State para Armazenar os 3 Cafés Randômicos do Carousel //
+  const [dataCarrousel, setDataCarrousel] = useState<CoffeesDTO[]>(
+    getThreeRandomCoffeesInCarousel(),
+  )
+
   // Disparando a função de Fetch monitorando o Filter //
   useEffect(() => {
     getLoadingData()
   }, [categorySelected])
+
+  // Disparando a Busca de 3 Cafés p/ o Carousel //
+  useEffect(() => {
+    setDataCarrousel(getThreeRandomCoffeesInCarousel())
+  }, [])
 
   return (
     <VStack flex={1} backgroundColor={THEME.colors.WHITE}>
@@ -64,7 +77,7 @@ export function Home() {
       </VStack>
 
       <Center marginTop={-112}>
-        <Carousel />
+        <Carousel coffees={dataCarrousel} />
       </Center>
 
       <CategoryFilter setCategorySelected={setCategorySelected} />

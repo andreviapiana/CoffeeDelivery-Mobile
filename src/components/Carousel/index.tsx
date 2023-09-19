@@ -1,16 +1,24 @@
 import { FlatList, View } from 'react-native'
 import { CoffeeCard } from '@components/CoffeeCard'
 
-import { dataCoffee } from '@storage/coffeesData'
+import { useNavigation } from '@react-navigation/native'
+import { CoffeesDTO } from '@dtos/CoffeesDTO'
 
 type CarouselProps = {
-  onPress: () => void
+  coffees: CoffeesDTO[]
 }
 
-export function Carousel({ onPress }: CarouselProps) {
+export function Carousel({ coffees }: CarouselProps) {
+  // Navegação p/ a página Details //
+  const navigation = useNavigation()
+
+  function handleGoToDetails(productId: number) {
+    navigation.navigate('details', { productId })
+  }
+
   return (
     <FlatList
-      data={dataCoffee}
+      data={coffees}
       keyExtractor={(item, index) => `${item}-${index}`}
       renderItem={({ item }) => (
         <CoffeeCard
@@ -19,7 +27,7 @@ export function Carousel({ onPress }: CarouselProps) {
           price={item.price}
           category={item.category}
           image={item.image}
-          onPress={onPress}
+          onPress={() => handleGoToDetails(item.id)}
         />
       )}
       horizontal
