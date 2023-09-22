@@ -6,13 +6,15 @@ import { THEME } from '@theme'
 import { Ionicons, Feather } from '@expo/vector-icons'
 
 import { useNavigation } from '@react-navigation/native'
+import { useCart } from '@hooks/useCart'
 
 type HeaderProps = {
   variant: 'Location' | 'BackButton' | 'Title'
 }
 
 export function Header({ variant = 'Location' }: HeaderProps) {
-  const hasItens = true
+  // useCart p/ capturar a quandidade de itens e exibir no Header //
+  const { cart } = useCart()
 
   // Navegando de volta //
   const navigation = useNavigation()
@@ -97,7 +99,7 @@ export function Header({ variant = 'Location' }: HeaderProps) {
               size={5}
             />
 
-            {hasItens && (
+            {cart.length > 0 && (
               <Circle
                 borderRadius={'full'}
                 width={5}
@@ -112,7 +114,7 @@ export function Header({ variant = 'Location' }: HeaderProps) {
                   fontSize={THEME.fontSize.TEXT.XS}
                   color={THEME.colors.WHITE}
                 >
-                  2
+                  {cart.length}
                 </Text>
               </Circle>
             )}
