@@ -1,25 +1,17 @@
 import { HStack, Icon, IconButton, Text } from 'native-base'
-import { useState } from 'react'
 
 import { THEME } from '@theme'
 import { Feather } from '@expo/vector-icons'
 
 type QuantitySelectorProps = {
-  counterValue?: number
+  counterValue: number
+  onChangeQuantity: (value: 1 | -1) => void
 }
 
-export function QuantitySelector({ counterValue }: QuantitySelectorProps) {
-  // Quantidade de Itens a adicionar //
-  const [quantity, setQuantity] = useState(counterValue || 1)
-
-  // Função de Quantidade de Itens //
-  function handleQtdCoffee(val: 1 | -1) {
-    const newQtd = quantity + val
-    if (newQtd >= 1) {
-      setQuantity(newQtd)
-    }
-  }
-
+export function QuantitySelector({
+  counterValue,
+  onChangeQuantity,
+}: QuantitySelectorProps) {
   return (
     <HStack alignItems={'center'} borderRadius={'md'}>
       <HStack alignItems={'center'} height={9} space={2}>
@@ -30,12 +22,14 @@ export function QuantitySelector({ counterValue }: QuantitySelectorProps) {
             <Icon
               as={Feather}
               name="minus"
-              color={quantity <= 1 ? THEME.colors.GRAY500 : THEME.colors.PURPLE}
+              color={
+                counterValue <= 1 ? THEME.colors.GRAY500 : THEME.colors.PURPLE
+              }
               size={5}
             />
           }
-          onPress={() => handleQtdCoffee(-1)}
-          disabled={quantity <= 1}
+          onPress={() => onChangeQuantity(-1)}
+          disabled={counterValue <= 1}
         />
 
         <Text
@@ -43,7 +37,7 @@ export function QuantitySelector({ counterValue }: QuantitySelectorProps) {
           fontSize={THEME.fontSize.TEXT.MD}
           color={THEME.colors.GRAY100}
         >
-          {quantity}
+          {counterValue}
         </Text>
 
         <IconButton
@@ -53,12 +47,14 @@ export function QuantitySelector({ counterValue }: QuantitySelectorProps) {
             <Icon
               as={Feather}
               name="plus"
-              color={quantity >= 9 ? THEME.colors.GRAY500 : THEME.colors.PURPLE}
+              color={
+                counterValue >= 9 ? THEME.colors.GRAY500 : THEME.colors.PURPLE
+              }
               size={5}
             />
           }
-          onPress={() => handleQtdCoffee(+1)}
-          disabled={quantity >= 9}
+          onPress={() => onChangeQuantity(+1)}
+          disabled={counterValue >= 9}
         />
       </HStack>
     </HStack>

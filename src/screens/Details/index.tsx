@@ -49,6 +49,17 @@ export function Details() {
   // Navegação p/ a página Cart //
   const navigation = useNavigation()
 
+  // Quantidade de Itens a adicionar //
+  const [quantity, setQuantity] = useState(1)
+
+  // Função de Quantidade de Itens //
+  function handleQtdCoffee(val: 1 | -1) {
+    const newQtd = quantity + val
+    if (newQtd >= 0) {
+      setQuantity(newQtd)
+    }
+  }
+
   // Função de adicionar ao carrinho //
   const { addProductCart } = useCart()
   const toast = useToast()
@@ -67,7 +78,7 @@ export function Details() {
         id: coffee.id,
         name: coffee.name,
         image: coffee.image,
-        quantity: Number(1),
+        quantity: Number(quantity),
         size: sizeSelected,
         price: coffee.price,
       })
@@ -251,7 +262,10 @@ export function Details() {
             alignItems={'center'}
             backgroundColor={THEME.colors.GRAY700}
           >
-            <QuantitySelector />
+            <QuantitySelector
+              onChangeQuantity={handleQtdCoffee}
+              counterValue={quantity}
+            />
 
             <Button flex={1} title="ADICIONAR" onPress={handleAddToCart} />
           </HStack>
