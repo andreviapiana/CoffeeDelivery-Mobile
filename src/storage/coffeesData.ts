@@ -17,7 +17,7 @@ import CoffeeEspecial4 from '../assets/coffeeEspecial4.png'
 
 export const dataCoffee: CoffeesDTO[] = [
   {
-    id: 1,
+    id: '1',
     name: 'Expresso Tradicional',
     description: 'O tradicional café feito com água quente e grãos moídos',
     price: 990,
@@ -25,7 +25,7 @@ export const dataCoffee: CoffeesDTO[] = [
     image: CoffeeTradicional1,
   },
   {
-    id: 2,
+    id: '2',
     name: 'Expresso Americano',
     description: 'Expresso diluído, menos intenso que o tradicional',
     price: 990,
@@ -33,7 +33,7 @@ export const dataCoffee: CoffeesDTO[] = [
     image: CoffeeTradicional2,
   },
   {
-    id: 3,
+    id: '3',
     name: 'Expresso Cremoso',
     description: 'Café expresso tradicional com espuma cremosa',
     price: 1090,
@@ -41,7 +41,7 @@ export const dataCoffee: CoffeesDTO[] = [
     image: CoffeeTradicional3,
   },
   {
-    id: 4,
+    id: '4',
     name: 'Latte',
     description: 'Café expresso com o dobro de leite e espuma cremosa',
     price: 1190,
@@ -49,7 +49,7 @@ export const dataCoffee: CoffeesDTO[] = [
     image: CoffeeTradicional4,
   },
   {
-    id: 5,
+    id: '5',
     name: 'Expresso Gelado',
     description: 'Bebida preparada com café expresso e cubos de gelo',
     price: 1090,
@@ -57,7 +57,7 @@ export const dataCoffee: CoffeesDTO[] = [
     image: CoffeeTradicional5,
   },
   {
-    id: 6,
+    id: '6',
     name: 'Capuccino',
     description: 'Bebida com canela feita de doses de café, leite e espuma',
     price: 1290,
@@ -65,7 +65,7 @@ export const dataCoffee: CoffeesDTO[] = [
     image: CoffeeDoce1,
   },
   {
-    id: 7,
+    id: '7',
     name: 'Mocaccino',
     description: 'Café expresso com calda de chocolate, pouco leite e espuma',
     price: 1390,
@@ -73,7 +73,7 @@ export const dataCoffee: CoffeesDTO[] = [
     image: CoffeeDoce2,
   },
   {
-    id: 8,
+    id: '8',
     name: 'Chocolate Quente',
     description: 'Bebida feita com chocolate dissolvido no leite quente e café',
     price: 1390,
@@ -81,7 +81,7 @@ export const dataCoffee: CoffeesDTO[] = [
     image: CoffeeDoce3,
   },
   {
-    id: 9,
+    id: '9',
     name: 'Cubano',
     description:
       'Drink gelado de café expresso com rum, creme de leite e hortelã',
@@ -90,7 +90,7 @@ export const dataCoffee: CoffeesDTO[] = [
     image: CoffeeEspecial1,
   },
   {
-    id: 10,
+    id: '10',
     name: 'Havaiano',
     description: 'Bebida adocicada preparada com café e leite de coco',
     price: 1390,
@@ -98,7 +98,7 @@ export const dataCoffee: CoffeesDTO[] = [
     image: CoffeeEspecial2,
   },
   {
-    id: 11,
+    id: '11',
     name: 'Árabe',
     description: 'Bebida preparada com grãos de café árabe e especiarias',
     price: 1390,
@@ -106,7 +106,7 @@ export const dataCoffee: CoffeesDTO[] = [
     image: CoffeeEspecial3,
   },
   {
-    id: 12,
+    id: '12',
     name: 'Irlandês',
     description: 'Bebida a base de café, uísque irlandês, açúcar e chantilly',
     price: 1590,

@@ -27,7 +27,7 @@ import { CoffeesDTO } from '@dtos/CoffeesDTO'
 import { dataCoffee } from '@storage/coffeesData'
 
 type RouteParamsProps = {
-  productId: number
+  productId: string
 }
 
 export function Details() {

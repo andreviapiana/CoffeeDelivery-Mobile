@@ -2,7 +2,7 @@ import { ImageSourcePropType } from 'react-native'
 import { CategoryDTO } from './CategoriesDTO'
 
 export type CoffeesDTO = {
-  id: number
+  id: string
   name: string
   description: string
   price: number

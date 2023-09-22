@@ -8,7 +8,7 @@ type HomeRouteProps = {
 }
 
 type DetailsRoutes = {
-  productId: number
+  productId: string
 }
 
 export declare global {
