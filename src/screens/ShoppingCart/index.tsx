@@ -75,7 +75,7 @@ export function ShoppingCart() {
         ) : (
           <FlatList
             data={cart}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id + item.size}
             renderItem={({ item }) => (
               <CartCard
                 data={item}

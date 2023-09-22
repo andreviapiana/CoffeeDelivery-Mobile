@@ -29,7 +29,8 @@ export async function storageProductSave(newProduct: StorageCartProps) {
     let products = await storageProductGetAll()
 
     const productExists = products.filter(
-      (product) => product.id === newProduct.id,
+      (product) =>
+        product.id === newProduct.id && product.size === newProduct.size,
     )
 
     if (productExists.length > 0) {
