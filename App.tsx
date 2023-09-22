@@ -17,6 +17,7 @@ import {
 import { Baloo2_700Bold } from '@expo-google-fonts/baloo-2'
 
 import { Routes } from '@routes/index'
+import { CartContextProvider } from '@contexts/CartContext'
 
 export default function App() {
   // State p/ Exibir a Splash Screen //
@@ -51,7 +52,9 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fontsLoaded ? <Routes /> : <Loading />}
+      <CartContextProvider>
+        {fontsLoaded ? <Routes /> : <Loading />}
+      </CartContextProvider>
     </NativeBaseProvider>
   )
 }
