@@ -7,6 +7,7 @@ import {
   Text,
   VStack,
   View,
+  useToast,
 } from 'native-base'
 import { useEffect, useState } from 'react'
 
@@ -25,34 +26,69 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 
 import { CoffeesDTO } from '@dtos/CoffeesDTO'
 import { dataCoffee } from '@storage/coffeesData'
+import { useCart } from '@hooks/useCart'
 
 type RouteParamsProps = {
   productId: string
 }
 
 export function Details() {
-  // Opções de tamanho dos Cafés //
-  const coffeesSizes = ['114ml', '140ml', '227ml']
-
-  // State para Salvar o filtro de Tamanho Selecionado //
-  const [groupSelected, setGroupSelected] = useState('')
-
-  // Navegação p/ a página Cart //
-  const navigation = useNavigation()
-
-  // Função de adicionar ao carrinho //
-  async function handleAddToCart() {
-    console.log('Adicionou o café ao carrinho')
-    navigation.navigate('cart')
-  }
-
   // Recebendo o ID pela Rota //
   const route = useRoute()
   const { productId } = route.params as RouteParamsProps
 
   // State para Armazenar o Café Buscado //
-  const [coffee, setCoffee] = useState<CoffeesDTO>()
+  const [coffee, setCoffee] = useState<CoffeesDTO>({} as CoffeesDTO)
 
+  // Opções de tamanho dos Cafés //
+  const coffeesSizes = ['114ml', '140ml', '227ml']
+
+  // State para Salvar o filtro de Tamanho Selecionado //
+  const [sizeSelected, setSizeSelected] = useState('')
+
+  // Navegação p/ a página Cart //
+  const navigation = useNavigation()
+
+  // Função de adicionar ao carrinho //
+  const { addProductCart } = useCart()
+  const toast = useToast()
+
+  async function handleAddToCart() {
+    if (!sizeSelected) {
+      toast.show({
+        title: 'Por favor selecione o tamanho do café!',
+        placement: 'top',
+        bgColor: 'red.500',
+      })
+      return
+    }
+    try {
+      await addProductCart({
+        id: coffee.id,
+        name: coffee.name,
+        image: coffee.image,
+        quantity: Number(1),
+        size: sizeSelected,
+        price: coffee.price,
+      })
+
+      toast.show({
+        title: 'Produto adicionado no carrinho',
+        placement: 'top',
+        bgColor: 'green.500',
+      })
+
+      navigation.navigate('cart')
+    } catch (error) {
+      toast.show({
+        title: 'Não foi possível adicionar o produto no carrinho',
+        placement: 'top',
+        bgColor: 'reed.500',
+      })
+    }
+  }
+
+  // Loading //
   const [isLoading, setIsLoading] = useState(false)
 
   // Função para Buscar o Café pelo ID da Rota //
@@ -176,8 +212,8 @@ export function Details() {
                 renderItem={({ item }) => (
                   <SizeFilter
                     name={item}
-                    isActive={groupSelected === item}
-                    onPress={() => setGroupSelected(item)}
+                    isActive={sizeSelected === item}
+                    onPress={() => setSizeSelected(item)}
                   />
                 )}
                 horizontal
