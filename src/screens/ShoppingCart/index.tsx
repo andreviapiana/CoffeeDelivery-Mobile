@@ -1,4 +1,4 @@
-import { VStack, ScrollView, Text, Icon, Center, View } from 'native-base'
+import { VStack, Text, Icon, Center, FlatList, useToast } from 'native-base'
 import { useNavigation } from '@react-navigation/native'
 import { StatusBar } from 'react-native'
 
@@ -10,9 +10,11 @@ import { CartFooter } from './components/CartFooter'
 import { CartCard } from './components/CartCard'
 
 import { Ionicons } from '@expo/vector-icons'
+import { useCart } from '@hooks/useCart'
 
 export function ShoppingCart() {
-  const cart = '1'
+  // useCart p/ capturar a quantidade e remover os itens //
+  const { cart, removeProductCart } = useCart()
 
   // Navegação p/ a página Finish //
   const navigation = useNavigation()
@@ -22,8 +24,23 @@ export function ShoppingCart() {
   }
 
   // Função de Remover o Item do Carrinho //
-  function handleRemove() {
-    console.log('Removeu o item do carrinho')
+  const toast = useToast()
+  async function handleItemRemove(productId: string) {
+    try {
+      await removeProductCart(productId)
+
+      toast.show({
+        title: 'Produto removido',
+        placement: 'top',
+        bgColor: 'green.500',
+      })
+    } catch (error) {
+      toast.show({
+        title: 'Não foi possível remover o produto',
+        placement: 'top',
+        bgColor: 'reed.500',
+      })
+    }
   }
 
   return (
@@ -36,37 +53,41 @@ export function ShoppingCart() {
       <VStack flex={1} pt={44} backgroundColor={THEME.colors.GRAY800}>
         <Header variant={'Title'} />
 
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
-          showsVerticalScrollIndicator={false}
-          marginTop={cart.length === 0 ? 16 : 0}
-          paddingX={cart.length === 0 ? 16 : 0}
-        >
-          {cart.length === 0 ? (
-            <Center marginBottom={8}>
-              <Icon
-                as={<Ionicons name="cart" />}
-                color={THEME.colors.GRAY400}
-                size={6}
-              />
-              <Text
-                marginTop={3}
-                marginBottom={8}
-                fontFamily={THEME.fontFamily.Roboto.REGULAR}
-                fontSize={THEME.fontSize.TEXT.SM}
-                color={THEME.colors.GRAY400}
-              >
-                Seu carrinho está vazio
-              </Text>
+        {cart.length === 0 ? (
+          <Center marginBottom={8} marginTop={16} paddingX={16}>
+            <Icon
+              as={<Ionicons name="cart" />}
+              color={THEME.colors.GRAY400}
+              size={6}
+            />
+            <Text
+              marginTop={3}
+              marginBottom={8}
+              fontFamily={THEME.fontFamily.Roboto.REGULAR}
+              fontSize={THEME.fontSize.TEXT.SM}
+              color={THEME.colors.GRAY400}
+            >
+              Seu carrinho está vazio
+            </Text>
 
-              <Button title={'VER CATÁLOGO'} variant={'secondary'} />
-            </Center>
-          ) : (
-            <View>
-              <CartCard onPress={handleRemove} />
-            </View>
-          )}
-        </ScrollView>
+            <Button title={'VER CATÁLOGO'} variant={'secondary'} />
+          </Center>
+        ) : (
+          <FlatList
+            data={cart}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <CartCard
+                data={item}
+                onRemove={() => handleItemRemove(item.id)}
+              />
+            )}
+            _contentContainerStyle={{
+              paddingBottom: 20,
+            }}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
 
         {cart.length > 0 && <CartFooter onPress={handleFinish} />}
       </VStack>

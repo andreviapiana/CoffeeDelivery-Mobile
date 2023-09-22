@@ -4,13 +4,15 @@ import { THEME } from '@theme'
 import { QuantitySelector } from '@components/QuantitySelector'
 
 import { Feather } from '@expo/vector-icons'
-import coffeeImg from '../../../../assets/coffeeTradicional1.png'
+
+import { StorageCartProps } from '@storage/storageCart'
 
 type CartCardProps = {
-  onPress: () => void
+  onRemove: () => void
+  data: StorageCartProps
 }
 
-export function CartCard({ onPress }: CartCardProps) {
+export function CartCard({ data, onRemove }: CartCardProps) {
   return (
     <VStack
       paddingX={8}
@@ -21,7 +23,7 @@ export function CartCard({ onPress }: CartCardProps) {
     >
       <HStack alignItems={'center'} justifyContent={'space-between'}>
         <Image
-          source={coffeeImg}
+          source={data.image}
           alt="Foto do copo de café"
           resizeMode="contain"
           width={16}
@@ -35,14 +37,17 @@ export function CartCard({ onPress }: CartCardProps) {
               fontSize={THEME.fontSize.TEXT.MD}
               color={THEME.colors.GRAY100}
             >
-              Irlandês
+              {data.name}
             </Text>
             <Text
               fontFamily={THEME.fontFamily.Baloo2.BOLD}
               fontSize={THEME.fontSize.TEXT.MD}
               color={THEME.colors.GRAY200}
             >
-              R$ 9,90
+              R${' '}
+              {new Intl.NumberFormat('pt-BR', {
+                minimumFractionDigits: 2,
+              }).format((data.price / 100) * data.quantity)}
             </Text>
           </HStack>
           <Text
@@ -50,7 +55,7 @@ export function CartCard({ onPress }: CartCardProps) {
             fontSize={THEME.fontSize.TEXT.SM}
             color={THEME.colors.GRAY400}
           >
-            227ml
+            {data.size}
           </Text>
 
           <HStack alignItems={'center'} marginTop={2} space={2}>
@@ -62,7 +67,7 @@ export function CartCard({ onPress }: CartCardProps) {
               width={100}
               justifyContent={'center'}
             >
-              <QuantitySelector />
+              <QuantitySelector counterValue={data.quantity} />
             </Box>
 
             <IconButton
@@ -79,7 +84,7 @@ export function CartCard({ onPress }: CartCardProps) {
                   size="md"
                 />
               }
-              onPress={onPress}
+              onPress={onRemove}
             />
           </HStack>
         </VStack>

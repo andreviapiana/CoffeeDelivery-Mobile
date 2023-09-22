@@ -4,9 +4,13 @@ import { useState } from 'react'
 import { THEME } from '@theme'
 import { Feather } from '@expo/vector-icons'
 
-export function QuantitySelector() {
+type QuantitySelectorProps = {
+  counterValue?: number
+}
+
+export function QuantitySelector({ counterValue }: QuantitySelectorProps) {
   // Quantidade de Itens a adicionar //
-  const [quantity, setQuantity] = useState(1)
+  const [quantity, setQuantity] = useState(counterValue || 1)
 
   // Função de Quantidade de Itens //
   function handleQtdCoffee(val: 1 | -1) {
