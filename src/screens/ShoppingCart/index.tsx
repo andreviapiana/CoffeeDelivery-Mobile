@@ -43,6 +43,12 @@ export function ShoppingCart() {
     }
   }
 
+  // Total do Carrinho //
+  const cartTotal = cart.reduce(
+    (acc, curr) => acc + curr.price * curr.quantity!,
+    0,
+  )
+
   return (
     <>
       <StatusBar
@@ -89,7 +95,9 @@ export function ShoppingCart() {
           />
         )}
 
-        {cart.length > 0 && <CartFooter onPress={handleFinish} />}
+        {cart.length > 0 && (
+          <CartFooter onPress={handleFinish} totalValue={cartTotal} />
+        )}
       </VStack>
     </>
   )

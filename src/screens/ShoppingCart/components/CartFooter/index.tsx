@@ -5,9 +5,10 @@ import { Button } from '@components/Button'
 
 type CartFooterProps = {
   onPress: () => void
+  totalValue: number
 }
 
-export function CartFooter({ onPress }: CartFooterProps) {
+export function CartFooter({ onPress, totalValue }: CartFooterProps) {
   return (
     <VStack
       paddingX={8}
@@ -30,7 +31,10 @@ export function CartFooter({ onPress }: CartFooterProps) {
           fontSize={THEME.fontSize.TEXT.MD}
           color={THEME.colors.GRAY200}
         >
-          R$ 9,90
+          R${' '}
+          {new Intl.NumberFormat('pt-BR', {
+            minimumFractionDigits: 2,
+          }).format(totalValue / 100)}
         </Text>
       </HStack>
 
