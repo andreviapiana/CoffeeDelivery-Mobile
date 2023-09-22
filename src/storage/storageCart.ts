@@ -35,7 +35,7 @@ export async function storageProductSave(newProduct: StorageCartProps) {
 
     if (productExists.length > 0) {
       products = products.map((product) => {
-        if (product.id === newProduct.id) {
+        if (product.id + product.size === newProduct.id + newProduct.size) {
           product.quantity =
             Number(product.quantity) + Number(newProduct.quantity)
         }
