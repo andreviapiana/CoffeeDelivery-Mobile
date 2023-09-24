@@ -81,6 +81,7 @@ export function Details() {
         quantity: Number(quantity),
         size: sizeSelected,
         price: coffee.price,
+        removeId: new Date().getTime().toString(),
       })
 
       toast.show({
@@ -94,7 +95,7 @@ export function Details() {
       toast.show({
         title: 'Não foi possível adicionar o produto no carrinho',
         placement: 'top',
-        bgColor: 'reed.500',
+        bgColor: 'red.500',
       })
     }
   }

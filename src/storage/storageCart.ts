@@ -11,6 +11,7 @@ export type StorageCartProps = {
   quantity: number
   image: ImageSourcePropType
   price: number
+  removeId: string
 }
 
 export async function storageProductGetAll() {
@@ -55,12 +56,12 @@ export async function storageProductSave(newProduct: StorageCartProps) {
   }
 }
 
-export async function storageProductRemove(productId: string) {
+export async function storageProductRemove(removeId: string) {
   try {
     const products = await storageProductGetAll()
 
     const productsUpdated = products.filter(
-      (product) => product.id !== productId,
+      (product) => product.removeId !== removeId,
     )
     await AsyncStorage.setItem(CART_STORAGE, JSON.stringify(productsUpdated))
 

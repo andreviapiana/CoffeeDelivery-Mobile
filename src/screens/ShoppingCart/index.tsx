@@ -25,9 +25,9 @@ export function ShoppingCart() {
 
   // Função de Remover o Item do Carrinho //
   const toast = useToast()
-  async function handleItemRemove(productId: string) {
+  async function handleItemRemove(removeId: string) {
     try {
-      await removeProductCart(productId)
+      await removeProductCart(removeId)
 
       toast.show({
         title: 'Produto removido',
@@ -38,7 +38,7 @@ export function ShoppingCart() {
       toast.show({
         title: 'Não foi possível remover o produto',
         placement: 'top',
-        bgColor: 'reed.500',
+        bgColor: 'red.500',
       })
     }
   }
@@ -85,7 +85,7 @@ export function ShoppingCart() {
             renderItem={({ item }) => (
               <CartCard
                 data={item}
-                onRemove={() => handleItemRemove(item.id)}
+                onRemove={() => handleItemRemove(item.removeId)}
               />
             )}
             _contentContainerStyle={{
