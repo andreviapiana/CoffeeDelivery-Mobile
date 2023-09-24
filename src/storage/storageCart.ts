@@ -70,3 +70,8 @@ export async function storageProductRemove(removeId: string) {
     throw error
   }
 }
+
+// Função p/ Limpar o Carrinho do Finalizar //
+export async function storageClearShopCart() {
+  await AsyncStorage.setItem(CART_STORAGE, JSON.stringify([]))
+}

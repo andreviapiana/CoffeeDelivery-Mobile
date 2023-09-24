@@ -6,11 +6,13 @@ import {
   storageProductSave,
   storageProductRemove,
   storageProductGetAll,
+  storageClearShopCart,
 } from '../storage/storageCart'
 
 export type CartContextDataProps = {
   addProductCart: (newProduct: StorageCartProps) => Promise<void>
   removeProductCart: (productId: string) => Promise<void>
+  clearShopCart: () => Promise<void>
   cart: StorageCartProps[]
 }
 
@@ -43,6 +45,12 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     }
   }
 
+  async function clearShopCart() {
+    await storageClearShopCart()
+
+    setCart([])
+  }
+
   useEffect(() => {
     storageProductGetAll()
       .then((products) => setCart(products))
@@ -55,6 +63,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         cart,
         addProductCart,
         removeProductCart,
+        clearShopCart,
       }}
     >
       {children}

@@ -14,12 +14,13 @@ import { useCart } from '@hooks/useCart'
 
 export function ShoppingCart() {
   // useCart p/ capturar a quantidade e remover os itens //
-  const { cart, removeProductCart } = useCart()
+  const { cart, removeProductCart, clearShopCart } = useCart()
 
   // Navegação p/ a página Finish //
   const navigation = useNavigation()
 
   function handleFinish() {
+    clearShopCart()
     navigation.navigate('finish')
   }
 
