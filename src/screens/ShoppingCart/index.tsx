@@ -26,9 +26,9 @@ export function ShoppingCart() {
 
   // Função de Remover o Item do Carrinho //
   const toast = useToast()
-  async function handleItemRemove(removeId: string) {
+  async function handleItemRemove(uniqueId: string) {
     try {
-      await removeProductCart(removeId)
+      await removeProductCart(uniqueId)
 
       toast.show({
         title: 'Produto removido',
@@ -86,7 +86,7 @@ export function ShoppingCart() {
             renderItem={({ item }) => (
               <CartCard
                 data={item}
-                onRemove={() => handleItemRemove(item.removeId)}
+                onRemove={() => handleItemRemove(item.uniqueId)}
               />
             )}
             _contentContainerStyle={{

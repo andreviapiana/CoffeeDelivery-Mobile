@@ -7,11 +7,15 @@ import {
   storageProductRemove,
   storageProductGetAll,
   storageClearShopCart,
+  storageProductIncrease,
+  storageProductDecrease,
 } from '../storage/storageCart'
 
 export type CartContextDataProps = {
   addProductCart: (newProduct: StorageCartProps) => Promise<void>
   removeProductCart: (productId: string) => Promise<void>
+  increaseCartQuantity: (removeId: string) => Promise<void>
+  decreaseCartQuantity: (removeId: string) => Promise<void>
   clearShopCart: () => Promise<void>
   cart: StorageCartProps[]
 }
@@ -45,6 +49,24 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     }
   }
 
+  async function increaseCartQuantity(uniqueId: string) {
+    try {
+      const response = await storageProductIncrease(uniqueId)
+      setCart(response)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async function decreaseCartQuantity(uniqueId: string) {
+    try {
+      const response = await storageProductDecrease(uniqueId)
+      setCart(response)
+    } catch (error) {
+      throw error
+    }
+  }
+
   async function clearShopCart() {
     await storageClearShopCart()
 
@@ -63,6 +85,8 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         cart,
         addProductCart,
         removeProductCart,
+        increaseCartQuantity,
+        decreaseCartQuantity,
         clearShopCart,
       }}
     >

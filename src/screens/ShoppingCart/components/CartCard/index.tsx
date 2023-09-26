@@ -6,6 +6,7 @@ import { QuantitySelector } from '@components/QuantitySelector'
 import { Feather } from '@expo/vector-icons'
 
 import { StorageCartProps } from '@storage/storageCart'
+import { useCart } from '@hooks/useCart'
 
 type CartCardProps = {
   onRemove: () => void
@@ -13,6 +14,18 @@ type CartCardProps = {
 }
 
 export function CartCard({ data, onRemove }: CartCardProps) {
+  // useCart //
+  const { increaseCartQuantity, decreaseCartQuantity } = useCart()
+
+  // Função p/ Alterar a Quantidade de Itens no Carrinho e já salvar no Async //
+  async function handleChangeQuantity(val: 1 | -1) {
+    if (val === 1) {
+      await increaseCartQuantity(data.uniqueId)
+    } else {
+      await decreaseCartQuantity(data.uniqueId)
+    }
+  }
+
   return (
     <VStack
       paddingX={8}
@@ -67,7 +80,10 @@ export function CartCard({ data, onRemove }: CartCardProps) {
               width={100}
               justifyContent={'center'}
             >
-              <QuantitySelector counterValue={data.quantity} />
+<QuantitySelector
+  onChangeQuantity={handleChangeQuantity}
+  counterValue={data.quantity}
+/>
             </Box>
 
             <IconButton
