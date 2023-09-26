@@ -28,9 +28,14 @@ import { CoffeesDTO } from '@dtos/CoffeesDTO'
 import { dataCoffee } from '@storage/coffeesData'
 import { useCart } from '@hooks/useCart'
 
+import Animated, { Easing, Keyframe } from 'react-native-reanimated'
+import { Dimensions } from 'react-native'
+
 type RouteParamsProps = {
   productId: string
 }
+
+const SCREEN_WIDTH = Dimensions.get('screen').width
 
 export function Details() {
   // Recebendo o ID pela Rota //
@@ -81,7 +86,7 @@ export function Details() {
         quantity: Number(quantity),
         size: sizeSelected,
         price: coffee.price,
-        removeId: new Date().getTime().toString(),
+        uniqueId: new Date().getTime().toString(),
       })
 
       toast.show({
@@ -118,13 +123,30 @@ export function Details() {
     }
   }
 
+  // Animação de Entrada //
+  const enteringKeyFrame = new Keyframe({
+    0: {
+      transform: [{ translateX: +SCREEN_WIDTH }],
+      easing: Easing.exp,
+    },
+    100: {
+      transform: [{ translateX: 0 }],
+      easing: Easing.exp,
+    },
+  })
+
   // UseEffect p/ Disparar a Busca do Café pelo ID //
   useEffect(() => {
     handleGetCoffeeById()
   }, [productId])
 
   return (
-    <VStack flex={1} backgroundColor={THEME.colors.WHITE}>
+    <Animated.View
+      entering={enteringKeyFrame}
+      style={{
+        height: '100%',
+      }}
+    >
       {isLoading ? (
         <Loading />
       ) : (
@@ -272,6 +294,6 @@ export function Details() {
           </HStack>
         </ScrollView>
       )}
-    </VStack>
+    </Animated.View>
   )
 }
