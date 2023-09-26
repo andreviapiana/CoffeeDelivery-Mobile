@@ -1,6 +1,6 @@
 import { VStack, Text, Icon, Center, FlatList, useToast } from 'native-base'
 import { useNavigation } from '@react-navigation/native'
-import { StatusBar } from 'react-native'
+import { Dimensions, StatusBar } from 'react-native'
 
 import { THEME } from '@theme'
 
@@ -11,6 +11,10 @@ import { CartCard } from './components/CartCard'
 
 import { Ionicons } from '@expo/vector-icons'
 import { useCart } from '@hooks/useCart'
+
+import Animated, { Easing, Keyframe } from 'react-native-reanimated'
+
+const SCREEN_WIDTH = Dimensions.get('screen').width
 
 export function ShoppingCart() {
   // useCart p/ capturar a quantidade e remover os itens //
@@ -50,8 +54,25 @@ export function ShoppingCart() {
     0,
   )
 
+  // Animação de Entrada //
+  const enteringKeyFrame = new Keyframe({
+    0: {
+      transform: [{ translateX: +SCREEN_WIDTH }],
+      easing: Easing.exp,
+    },
+    100: {
+      transform: [{ translateX: 0 }],
+      easing: Easing.exp,
+    },
+  })
+
   return (
-    <>
+    <Animated.View
+      entering={enteringKeyFrame}
+      style={{
+        height: '100%',
+      }}
+    >
       <StatusBar
         barStyle="dark-content"
         backgroundColor="transparent"
@@ -100,6 +121,6 @@ export function ShoppingCart() {
           <CartFooter onPress={handleFinish} totalValue={cartTotal} />
         )}
       </VStack>
-    </>
+    </Animated.View>
   )
 }
