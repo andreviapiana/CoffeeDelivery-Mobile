@@ -2,6 +2,14 @@ import { Box, HStack, Image, Pressable, Text, VStack, View } from 'native-base'
 import { THEME } from '@theme'
 
 import { ImageSourcePropType } from 'react-native'
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated'
+import { useEffect } from 'react'
+
+const PressableAnimated = Animated.createAnimatedComponent(Pressable)
 
 type CoffeeCardProps = {
   name: string
@@ -10,6 +18,8 @@ type CoffeeCardProps = {
   category: string
   image: ImageSourcePropType
   onPress: () => void
+  index: number
+  currentIndex: number | null
 }
 
 export function CoffeeCard({
@@ -19,9 +29,29 @@ export function CoffeeCard({
   category,
   image,
   onPress,
+  index,
+  currentIndex,
 }: CoffeeCardProps) {
+  // Animação de Scale do Card //
+  const scale = useSharedValue(1)
+
+  const animatedContainerStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          scale: scale.value,
+        },
+      ],
+    }
+  })
+
+// Disparo da Animação //
+useEffect(() => {
+  scale.value = withSpring(index === currentIndex ? 1 : 0.8)
+}, [currentIndex])
+
   return (
-    <Pressable onPress={onPress}>
+    <PressableAnimated style={[animatedContainerStyle]} onPress={onPress}>
       <VStack
         height={262}
         width={208}
@@ -111,6 +141,6 @@ export function CoffeeCard({
           </HStack>
         </VStack>
       </VStack>
-    </Pressable>
+    </PressableAnimated>
   )
 }
