@@ -1,4 +1,12 @@
-import { VStack, Text, Icon, Center, FlatList, useToast } from 'native-base'
+import {
+  VStack,
+  Text,
+  Icon,
+  Center,
+  FlatList,
+  useToast,
+  View,
+} from 'native-base'
 import { useNavigation } from '@react-navigation/native'
 import { Dimensions, StatusBar } from 'react-native'
 
@@ -9,10 +17,17 @@ import { Header } from '@components/Header'
 import { CartFooter } from './components/CartFooter'
 import { CartCard } from './components/CartCard'
 
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons, Feather } from '@expo/vector-icons'
 import { useCart } from '@hooks/useCart'
 
-import Animated, { Easing, Keyframe } from 'react-native-reanimated'
+import Animated, {
+  Easing,
+  Keyframe,
+  Layout,
+  SlideInRight,
+  SlideOutRight,
+} from 'react-native-reanimated'
+import { Swipeable } from 'react-native-gesture-handler'
 
 const SCREEN_WIDTH = Dimensions.get('screen').width
 
@@ -105,10 +120,40 @@ export function ShoppingCart() {
             data={cart}
             keyExtractor={(item) => item.id + item.size}
             renderItem={({ item }) => (
-              <CartCard
-                data={item}
-                onRemove={() => handleItemRemove(item.uniqueId)}
-              />
+              <Animated.View
+                key={item.id}
+                entering={SlideInRight}
+                exiting={SlideOutRight}
+                layout={Layout.springify()}
+              >
+                <Swipeable
+                  overshootLeft={false}
+                  containerStyle={{
+                    width: '100%',
+                    backgroundColor: THEME.colors.RED_LIGHT,
+                  }}
+                  onSwipeableOpen={() => handleItemRemove(item.uniqueId)}
+                  renderLeftActions={() => (
+                    <View
+                      width={'100%'}
+                      height={'100%'}
+                      justifyContent={'center'}
+                      paddingX={8}
+                    >
+                      <Icon
+                        as={<Feather name="trash-2" />}
+                        color={THEME.colors.RED_DARK}
+                        size={7}
+                      />
+                    </View>
+                  )}
+                >
+                  <CartCard
+                    data={item}
+                    onRemove={() => handleItemRemove(item.uniqueId)}
+                  />
+                </Swipeable>
+              </Animated.View>
             )}
             _contentContainerStyle={{
               paddingBottom: 20,

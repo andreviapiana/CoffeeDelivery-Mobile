@@ -80,10 +80,10 @@ export function CartCard({ data, onRemove }: CartCardProps) {
               width={100}
               justifyContent={'center'}
             >
-<QuantitySelector
-  onChangeQuantity={handleChangeQuantity}
-  counterValue={data.quantity}
-/>
+              <QuantitySelector
+                onChangeQuantity={handleChangeQuantity}
+                counterValue={data.quantity}
+              />
             </Box>
 
             <IconButton

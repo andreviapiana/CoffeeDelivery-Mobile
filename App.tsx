@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates */
 import { useEffect, useState } from 'react'
 
 import { NativeBaseProvider } from 'native-base'
@@ -18,6 +19,9 @@ import { Baloo2_700Bold } from '@expo-google-fonts/baloo-2'
 
 import { Routes } from '@routes/index'
 import { CartContextProvider } from '@contexts/CartContext'
+
+import 'react-native-gesture-handler'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 export default function App() {
   // State p/ Exibir a Splash Screen //
@@ -46,15 +50,17 @@ export default function App() {
   }
 
   return (
-    <NativeBaseProvider theme={THEME}>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor="transparent"
-        translucent
-      />
-      <CartContextProvider>
-        {fontsLoaded ? <Routes /> : <Loading />}
-      </CartContextProvider>
-    </NativeBaseProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NativeBaseProvider theme={THEME}>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor="transparent"
+          translucent
+        />
+        <CartContextProvider>
+          {fontsLoaded ? <Routes /> : <Loading />}
+        </CartContextProvider>
+      </NativeBaseProvider>
+    </GestureHandlerRootView>
   )
 }
