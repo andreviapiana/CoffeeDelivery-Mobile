@@ -14,7 +14,7 @@ export function CoffeeMenu({ coffees }: CoffeeMenuProps) {
   // Navegação p/ a página Details //
   const navigation = useNavigation()
 
-  function handleGoToDetails(productId: number) {
+  function handleGoToDetails(productId: string) {
     navigation.navigate('details', { productId })
   }
 
