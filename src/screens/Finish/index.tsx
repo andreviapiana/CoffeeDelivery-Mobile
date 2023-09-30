@@ -120,16 +120,16 @@ export function Finish() {
         </Text>
       </Animated.View>
 
-<Animated.View
-  style={[
-    animatedContainerStyle2,
-    {
-      width: '100%',
-    },
-  ]}
->
-  <Button title={'IR PARA A HOME'} onPress={handleHome} />
-</Animated.View>
+      <Animated.View
+        style={[
+          animatedContainerStyle2,
+          {
+            width: '100%',
+          },
+        ]}
+      >
+        <Button title={'IR PARA A HOME'} onPress={handleHome} />
+      </Animated.View>
     </Center>
   )
 }
