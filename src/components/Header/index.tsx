@@ -7,12 +7,18 @@ import { Ionicons, Feather } from '@expo/vector-icons'
 
 import { useNavigation } from '@react-navigation/native'
 import { useCart } from '@hooks/useCart'
+import Animated, {
+  SharedValue,
+  interpolateColor,
+  useAnimatedStyle,
+} from 'react-native-reanimated'
 
 type HeaderProps = {
   variant: 'Location' | 'BackButton' | 'Title'
+  scrollValue?: SharedValue<any>
 }
 
-export function Header({ variant = 'Location' }: HeaderProps) {
+export function Header({ variant = 'Location', scrollValue }: HeaderProps) {
   // useCart p/ capturar a quandidade de itens e exibir no Header //
   const { cart } = useCart()
 
@@ -27,6 +33,18 @@ export function Header({ variant = 'Location' }: HeaderProps) {
   function handleGoToCart() {
     navigation.navigate('cart')
   }
+
+  // ================ ANIMAÇÕES ================= //
+  // Animação do Texto do Header (mudança de cor) //
+  const headerTextStyle = useAnimatedStyle(() => {
+    return {
+      color: interpolateColor(
+        scrollValue?.value,
+        [0, 320],
+        [THEME.colors.WHITE, THEME.colors.GRAY200],
+      ),
+    }
+  })
 
   return (
     <HStack
@@ -46,14 +64,18 @@ export function Header({ variant = 'Location' }: HeaderProps) {
             size={5}
           />
 
-          <Text
-            color={THEME.colors.WHITE}
-            paddingLeft={1}
-            fontFamily={THEME.fontFamily.Roboto.REGULAR}
-            fontSize={THEME.fontSize.TEXT.SM}
+          <Animated.Text
+            style={[
+              headerTextStyle,
+              {
+                paddingLeft: 4,
+                fontFamily: THEME.fontFamily.Roboto.REGULAR,
+                fontSize: THEME.fontSize.TEXT.SM,
+              },
+            ]}
           >
             Porto Alegre, RS
-          </Text>
+          </Animated.Text>
         </HStack>
       ) : (
         <TouchableOpacity onPress={handleGoBack}>

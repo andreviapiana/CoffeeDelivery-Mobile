@@ -1,5 +1,5 @@
-import { Center, HStack, ScrollView, VStack } from 'native-base'
-import { useEffect, useRef, useState } from 'react'
+import { Center, HStack, ScrollView, StatusBar, VStack } from 'native-base'
+import { useEffect, useState } from 'react'
 
 import { THEME } from '@theme'
 
@@ -18,6 +18,18 @@ import { getAllCoffeesByCategory } from '@services/getAllCoffeesByCategory'
 
 import { CoffeesDTO } from '@dtos/CoffeesDTO'
 import { getThreeRandomCoffeesInCarousel } from '@services/getThreeRandomCoffeesInCarousel'
+
+import Animated, {
+  Extrapolate,
+  interpolate,
+  interpolateColor,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  runOnJS,
+  SlideInRight,
+  SlideInUp,
+} from 'react-native-reanimated'
 
 export function Home() {
   // Loading //
@@ -59,38 +71,116 @@ export function Home() {
     setDataCarrousel(getThreeRandomCoffeesInCarousel())
   }, [])
 
+  // ============================== ANIMAÇÕES ============================== //
+  // Status para a cor da StatusBar (ela muda de light p/ dark baseado no scroll) //
+  const [isUpdateColorStatusBar, setIsUpdateColorStatusBar] = useState(false)
+
+  // Captura do valor do scrollY da ScrollView //
+  const scrollY = useSharedValue(0)
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      // Setagem do ScrollY //
+      scrollY.value = event.contentOffset.y
+      // Atualização da cor da StatusBar ao chegar em 120px //
+      if (event.contentOffset.y >= 120 && !isUpdateColorStatusBar) {
+        runOnJS(setIsUpdateColorStatusBar)(true)
+      } else if (event.contentOffset.y < 120 && isUpdateColorStatusBar) {
+        runOnJS(setIsUpdateColorStatusBar)(false)
+      }
+    },
+  })
+
+  // Animação do bloco do Header (mudança de cor e opacidade) //
+  const headerStyles = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(
+        scrollY.value,
+        [0, 320, 340],
+        [1, 0.5, 1],
+        Extrapolate.CLAMP,
+      ),
+      backgroundColor: interpolateColor(
+        scrollY.value,
+        [170, 320],
+        [THEME.colors.GRAY100, THEME.colors.WHITE],
+      ),
+    }
+  })
+
+  // Animação do bloco do Search (mudança de opacidade do fundo) //
+  const introStyles = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(scrollY.value, [0, 320, 380], [1, 0.5, 0]),
+    }
+  })
+
   return (
     <VStack flex={1} backgroundColor={THEME.colors.WHITE}>
-      <VStack height={386} pt={44} backgroundColor={THEME.colors.GRAY100}>
-        <Header variant={'Location'} />
+      <StatusBar
+        barStyle={isUpdateColorStatusBar ? 'dark-content' : 'light-content'}
+        translucent
+      />
 
-        <Search
-          search={search}
-          setSearch={setSearch}
-          isSearching={isSearching}
-          onPress={getLoadingData}
-        />
+      <Animated.View entering={SlideInUp.duration(500)}>
+        <Animated.View
+          style={[
+            headerStyles,
+            {
+              paddingTop: 44,
+            },
+          ]}
+        >
+          <Header variant={'Location'} scrollValue={scrollY} />
+        </Animated.View>
 
-        <HStack marginRight={1} justifyContent={'flex-end'} marginTop={-5}>
-          <CoffeGrainSvg />
-        </HStack>
-      </VStack>
+        <Animated.ScrollView
+          onScroll={scrollHandler}
+          scrollEventThrottle={16}
+          stickyHeaderIndices={[2]}
+          contentContainerStyle={{
+            paddingBottom: 140,
+          }}
+        >
+          <Animated.View
+            style={[
+              introStyles,
+              {
+                height: 270,
+                backgroundColor: THEME.colors.GRAY100,
+              },
+            ]}
+          >
+            <Search
+              search={search}
+              setSearch={setSearch}
+              isSearching={isSearching}
+              onPress={getLoadingData}
+            />
 
-      <Center marginTop={-112}>
-        <Carousel coffees={dataCarrousel} />
-      </Center>
+            <HStack marginRight={1} justifyContent={'flex-end'} marginTop={-5}>
+              <CoffeGrainSvg />
+            </HStack>
+          </Animated.View>
 
-      <CategoryFilter setCategorySelected={setCategorySelected} />
+          <Animated.View entering={SlideInRight.duration(1000)}>
+            <Center marginTop={-112}>
+              <Carousel coffees={dataCarrousel} />
+            </Center>
+          </Animated.View>
 
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        scrollEventThrottle={16}
-        contentContainerStyle={{
-          alignItems: 'center',
-        }}
-      >
-        <CoffeeMenu coffees={listSection} />
-      </ScrollView>
+          <CategoryFilter setCategorySelected={setCategorySelected} />
+
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            scrollEventThrottle={16}
+            contentContainerStyle={{
+              alignItems: 'center',
+            }}
+          >
+            <CoffeeMenu coffees={listSection} />
+          </ScrollView>
+        </Animated.ScrollView>
+      </Animated.View>
     </VStack>
   )
 }

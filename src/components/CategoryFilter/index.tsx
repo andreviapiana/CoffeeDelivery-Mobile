@@ -24,7 +24,12 @@ export function CategoryFilter({ setCategorySelected }: CategoryFilterProps) {
   }
 
   return (
-    <VStack paddingX={8} marginTop={4} marginBottom={4}>
+    <VStack
+      paddingX={8}
+      paddingTop={4}
+      paddingBottom={4}
+      backgroundColor={THEME.colors.WHITE}
+    >
       <Text
         fontFamily={THEME.fontFamily.Baloo2.BOLD}
         fontSize={THEME.fontSize.TITLE.SM}
