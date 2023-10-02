@@ -59,7 +59,10 @@ export function Carousel({ coffees }: CarouselProps) {
       horizontal
       showsHorizontalScrollIndicator={false}
       pagingEnabled
-      snapToAlignment="center"
+      bounces={false}
+      decelerationRate={0}
+      scrollEventThrottle={16}
+      snapToInterval={208}
       contentContainerStyle={{
         justifyContent: 'center',
         alignItems: 'center',
