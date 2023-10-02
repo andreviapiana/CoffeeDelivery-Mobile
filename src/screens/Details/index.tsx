@@ -18,9 +18,9 @@ import { QuantitySelector } from '@components/QuantitySelector'
 import { SizeFilter } from '@components/SizeFilter'
 import { Button } from '@components/Button'
 import { Loading } from '@components/Loading'
+import { SmokeAnimation } from './components/SmokeAnimation'
 
 import CoffeeImg from '../../assets/coffee.png'
-import Smoke3Svg from '../../assets/Smoke3.svg'
 
 import { useNavigation, useRoute } from '@react-navigation/native'
 
@@ -65,17 +65,22 @@ export function Details() {
     }
   }
 
+  // Armazenando o State de Erro p/ deixar os botões vermelhos //
+  const [isError, setIsError] = useState(false)
+
+  // Função para setar o item selecionado e apagar o erro(caso exista) //
+  async function handleAdsizeSelect(item: string) {
+    setSizeSelected(item)
+    setIsError(false)
+  }
+
   // Função de adicionar ao carrinho //
   const { addProductCart } = useCart()
   const toast = useToast()
 
   async function handleAddToCart() {
     if (!sizeSelected) {
-      toast.show({
-        title: 'Por favor selecione o tamanho do café!',
-        placement: 'top',
-        bgColor: 'red.500',
-      })
+      setIsError(true)
       return
     }
     try {
@@ -217,12 +222,11 @@ export function Details() {
             </VStack>
 
             <View alignItems={'center'}>
-              <Smoke3Svg width={64} height={137} />
+              <SmokeAnimation />
               <Image
                 source={CoffeeImg}
                 alt="Imagem de uma xícara de café quente"
-                marginTop={'-70px'}
-                zIndex={-1}
+                bottom={'-70px'}
                 height={260}
                 width={295}
               />
@@ -233,7 +237,7 @@ export function Details() {
             <Text
               fontFamily={THEME.fontFamily.Roboto.REGULAR}
               fontSize={THEME.fontSize.TEXT.SM}
-              color={THEME.colors.GRAY400}
+              color={isError ? THEME.colors.RED_DARK : THEME.colors.GRAY400}
               marginTop={10}
             >
               Selecione o tamanho:
@@ -247,7 +251,8 @@ export function Details() {
                   <SizeFilter
                     name={item}
                     isActive={sizeSelected === item}
-                    onPress={() => setSizeSelected(item)}
+                    isError={isError}
+                    onPress={() => handleAdsizeSelect(item)}
                   />
                 )}
                 horizontal
@@ -283,7 +288,7 @@ export function Details() {
             space={4}
             borderRadius={'md'}
             alignItems={'center'}
-            backgroundColor={THEME.colors.GRAY700}
+            backgroundColor={THEME.colors.GRAY600}
           >
             <QuantitySelector
               onChangeQuantity={handleQtdCoffee}
