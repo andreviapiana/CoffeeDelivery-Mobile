@@ -117,10 +117,14 @@ export function Details() {
   async function handleGetCoffeeById() {
     try {
       setIsLoading(true)
-      const filteredCoffee = dataCoffee.filter(
-        (item) => item.id === productId,
-      )[0] as CoffeesDTO
-      setCoffee(filteredCoffee)
+      for (const section of dataCoffee) {
+        for (const item of section.data) {
+          if (item.id === productId) {
+            setCoffee(item as CoffeesDTO)
+            return
+          }
+        }
+      }
     } catch (error) {
       console.log(error)
     } finally {
