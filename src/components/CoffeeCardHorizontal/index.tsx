@@ -2,15 +2,21 @@ import { HStack, Image, Pressable, Text, VStack, View } from 'native-base'
 
 import { THEME } from '@theme'
 
-import { CoffeesDTO } from '@dtos/CoffeesDTO'
+import { ImageSourcePropType } from 'react-native'
 
 type CoffeeCardHorizontalProps = {
-  coffee: CoffeesDTO
+  name: string
+  description: string
+  price: number
+  image: ImageSourcePropType
   onPress: () => void
 }
 
 export function CoffeeCardHorizontal({
-  coffee,
+  name,
+  description,
+  price,
+  image,
   onPress,
 }: CoffeeCardHorizontalProps) {
   return (
@@ -31,7 +37,7 @@ export function CoffeeCardHorizontal({
         borderWidth={1}
       >
         <Image
-          source={coffee.image}
+          source={image}
           alt="Foto do copo de café"
           resizeMode="contain"
           position="absolute"
@@ -46,7 +52,7 @@ export function CoffeeCardHorizontal({
               lineHeight={'md'}
               height={21}
             >
-              {coffee.name}
+              {name}
             </Text>
 
             <Text
@@ -54,7 +60,7 @@ export function CoffeeCardHorizontal({
               fontSize={THEME.fontSize.TEXT.XS}
               color={THEME.colors.GRAY400}
             >
-              {coffee.description}
+              {description}
             </Text>
           </View>
 
@@ -73,7 +79,7 @@ export function CoffeeCardHorizontal({
             >
               {new Intl.NumberFormat('pt-BR', {
                 minimumFractionDigits: 2,
-              }).format(coffee.price / 100)}
+              }).format(price / 100)}
             </Text>
           </HStack>
         </VStack>

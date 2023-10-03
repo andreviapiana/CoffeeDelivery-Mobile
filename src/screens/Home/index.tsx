@@ -6,7 +6,6 @@ import {
   Text,
   View,
   SectionList,
-  ScrollView,
 } from 'native-base'
 import { useEffect, useState } from 'react'
 
@@ -15,12 +14,11 @@ import { THEME } from '@theme'
 import { Header } from '@components/Header'
 import { Search } from '@components/Search'
 import { Carousel } from '@components/Carousel'
-import { CoffeeMenu } from '@components/CoffeeMenu'
 import { CategoryButtonTag } from './components/CategoryButtonTag'
+import { CoffeeCardHorizontal } from '@components/CoffeeCardHorizontal'
 
 import CoffeGrainSvg from '../../assets/coffee_grain.svg'
 
-import { CategoryDTO } from '@dtos/CategoriesDTO'
 import { CoffeeSection } from '@storage/coffeesData'
 
 import { getAllCoffees } from '@services/getAllCoffes'
@@ -40,7 +38,16 @@ import Animated, {
   SlideInUp,
 } from 'react-native-reanimated'
 
+import { useNavigation } from '@react-navigation/native'
+
 export function Home() {
+  // Navegação p/ a página Details //
+  const navigation = useNavigation()
+
+  function handleGoToDetails(productId: string) {
+    navigation.navigate('details', { productId })
+  }
+
   // Loading //
   const [isSearching, setIsSearching] = useState(false)
 
@@ -203,15 +210,36 @@ export function Home() {
             </View>
           </View>
 
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            scrollEventThrottle={16}
+          <SectionList
+            sections={listSection}
+            scrollEnabled={false}
+            keyExtractor={(item) => item.name}
+            renderItem={({ item }) => (
+              <CoffeeCardHorizontal
+                name={item.name}
+                description={item.description}
+                price={item.price}
+                image={item.image}
+                onPress={() => handleGoToDetails(item.id)}
+              />
+            )}
             contentContainerStyle={{
-              alignItems: 'center',
+              paddingHorizontal: 32,
+              alignSelf: 'center',
             }}
-          >
-            <CoffeeMenu coffees={listSection} />
-          </ScrollView>
+            marginBottom={38}
+            marginTop={-4}
+            renderSectionHeader={({ section: { title } }) => (
+              <Text
+                color={THEME.colors.GRAY400}
+                fontFamily={THEME.fontFamily.Baloo2.BOLD}
+                fontSize={THEME.fontSize.TITLE.XS}
+                marginTop={12}
+              >
+                {title}
+              </Text>
+            )}
+          />
         </Animated.ScrollView>
       </Animated.View>
     </VStack>
