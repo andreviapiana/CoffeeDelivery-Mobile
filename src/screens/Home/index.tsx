@@ -1,4 +1,13 @@
-import { Center, HStack, ScrollView, StatusBar, VStack } from 'native-base'
+import {
+  Center,
+  HStack,
+  StatusBar,
+  VStack,
+  Text,
+  View,
+  SectionList,
+  ScrollView,
+} from 'native-base'
 import { useEffect, useState } from 'react'
 
 import { THEME } from '@theme'
@@ -6,8 +15,8 @@ import { THEME } from '@theme'
 import { Header } from '@components/Header'
 import { Search } from '@components/Search'
 import { Carousel } from '@components/Carousel'
-import { CategoryFilter } from '@components/CategoryFilter'
 import { CoffeeMenu } from '@components/CoffeeMenu'
+import { CategoryButtonTag } from './components/CategoryButtonTag'
 
 import CoffeGrainSvg from '../../assets/coffee_grain.svg'
 
@@ -37,9 +46,6 @@ export function Home() {
 
   // Armazenando o Search //
   const [search, setSearch] = useState('')
-
-  // State p/ salvar o botão de filtro ativo que vem lá do CategoryFilter //
-  const [categorySelected, setCategorySelected] = useState<CategoryDTO | ''>('')
 
   // State p/ Salvar os Cafés com Categoria separada p/ usar na SectionList //
   const [listSection, setListSection] = useState<CoffeeSection[]>([])
@@ -167,7 +173,35 @@ export function Home() {
             </Center>
           </Animated.View>
 
-          <CategoryFilter setCategorySelected={setCategorySelected} />
+          <View
+            padding={8}
+            paddingTop={4}
+            paddingBottom={3}
+            backgroundColor={THEME.colors.WHITE}
+          >
+            <Text
+              fontFamily={THEME.fontFamily.Baloo2.BOLD}
+              fontSize={THEME.fontSize.TITLE.SM}
+              color={THEME.colors.GRAY300}
+            >
+              Nossos cafés
+            </Text>
+
+            <View style={{ flexDirection: 'row', gap: 8, marginTop: 12 }}>
+              <CategoryButtonTag
+                text="Tradicionais"
+                /* onPress={() => handleScrollTo(0)} */
+              />
+              <CategoryButtonTag
+                text="Doces"
+                /* onPress={() => handleScrollTo(1)} */
+              />
+              <CategoryButtonTag
+                text="Especiais"
+                /* onPress={() => handleScrollTo(2)} */
+              />
+            </View>
+          </View>
 
           <ScrollView
             showsVerticalScrollIndicator={false}
