@@ -1,26 +1,29 @@
-import { CoffeesDTO } from '@dtos/CoffeesDTO'
-
-import { getAllCoffees } from './getAllCoffes'
+import { dataCoffee } from '@storage/coffeesData'
 
 export function getThreeRandomCoffeesInCarousel() {
-  const list: CoffeesDTO[] = []
+  // Armazenando as diferentes categorias //
+  const categories = {} as any
 
-  const coffeesTradicional = getAllCoffees({
-    category: 'TRADICIONAL',
-    search: '',
+  // Agrupar os itens por categoria //
+  dataCoffee.forEach((section) => {
+    section.data.forEach((item) => {
+      if (!categories[item.category]) {
+        categories[item.category] = []
+      }
+      categories[item.category].push(item)
+    })
   })
-  const coffeeTradicional =
-    coffeesTradicional[Math.floor(Math.random() * coffeesTradicional.length)]
-  list.push(coffeeTradicional)
 
-  const coffeesDoce = getAllCoffees({ category: 'DOCE', search: '' })
-  const coffeeDoce = coffeesDoce[Math.floor(Math.random() * coffeesDoce.length)]
-  list.push(coffeeDoce)
+  // Armazenando os itens escolhidos //
+  const randomItems = []
 
-  const coffeesEspecial = getAllCoffees({ category: 'ESPECIAL', search: '' })
-  const coffeeEspecial =
-    coffeesEspecial[Math.floor(Math.random() * coffeesEspecial.length)]
-  list.push(coffeeEspecial)
+  // Escolher aleatoriamente um item de cada categoria //
+  for (const category in categories) {
+    const itemsInCategory = categories[category]
+    const randomIndex = Math.floor(Math.random() * itemsInCategory.length)
+    randomItems.push(itemsInCategory[randomIndex])
+  }
 
-  return list
+  // Retornar o 3 itens escolhidos de forma randômica //
+  return randomItems
 }

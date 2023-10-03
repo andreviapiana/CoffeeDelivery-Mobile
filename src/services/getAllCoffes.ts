@@ -1,24 +1,27 @@
-import { CoffeesDTO } from '@dtos/CoffeesDTO'
-import { CategoryDTO } from '@dtos/CategoriesDTO'
-
 import { dataCoffee } from '@storage/coffeesData'
 
 type Props = {
-  category: CategoryDTO | ''
   search: string
 }
 
-export function getAllCoffees({ category, search }: Props): CoffeesDTO[] {
-  const data =
-    search === ''
-      ? dataCoffee
-      : dataCoffee.filter((item) =>
-          item.name.toLowerCase().includes(search.toLowerCase()),
-        )
+export function getAllCoffees({ search }: Props) {
+  // Armazenando os resultados //
+  const searchResults = []
 
-  if (category !== '') {
-    return data.filter((item) => item.category === category)
-  } else {
-    return data
+  // Buscando os cafés //
+  for (const section of dataCoffee) {
+    const matchingItems = section.data.filter((item) =>
+      item.name.toLowerCase().includes(search.toLowerCase()),
+    )
+
+    if (matchingItems.length > 0) {
+      searchResults.push({
+        title: section.title,
+        data: matchingItems,
+      })
+    }
   }
+
+  // Retornando o resultado //
+  return searchResults
 }

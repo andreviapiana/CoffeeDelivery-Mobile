@@ -12,9 +12,9 @@ import { CoffeeMenu } from '@components/CoffeeMenu'
 import CoffeGrainSvg from '../../assets/coffee_grain.svg'
 
 import { CategoryDTO } from '@dtos/CategoriesDTO'
-import { SectionListCategories } from '@dtos/SectionListCategoriesDTO'
+import { CoffeeSection } from '@storage/coffeesData'
 
-import { getAllCoffeesByCategory } from '@services/getAllCoffeesByCategory'
+import { getAllCoffees } from '@services/getAllCoffes'
 
 import { CoffeesDTO } from '@dtos/CoffeesDTO'
 import { getThreeRandomCoffeesInCarousel } from '@services/getThreeRandomCoffeesInCarousel'
@@ -42,17 +42,16 @@ export function Home() {
   const [categorySelected, setCategorySelected] = useState<CategoryDTO | ''>('')
 
   // State p/ Salvar os Cafés com Categoria separada p/ usar na SectionList //
-  const [listSection, setListSection] = useState<SectionListCategories[]>([])
+  const [listSection, setListSection] = useState<CoffeeSection[]>([])
 
   // Função de Fetch dos Cafés pela categoria ou pelo Search //
   function getLoadingData() {
     setIsSearching(true)
-    const coffeeList = getAllCoffeesByCategory({
-      category: categorySelected,
-      search,
-    })
-    setSearch('')
+
+    const coffeeList = getAllCoffees({ search })
+
     setListSection(coffeeList)
+    setSearch('')
     setIsSearching(false)
   }
 
@@ -61,10 +60,10 @@ export function Home() {
     getThreeRandomCoffeesInCarousel(),
   )
 
-  // Disparando a função de Fetch monitorando o Filter //
+  // Disparando a função de Fetch //
   useEffect(() => {
     getLoadingData()
-  }, [categorySelected])
+  }, [])
 
   // Disparando a Busca de 3 Cafés p/ o Carousel //
   useEffect(() => {
