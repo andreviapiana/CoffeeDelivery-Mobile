@@ -29,7 +29,7 @@ import { dataCoffee } from '@storage/coffeesData'
 import { useCart } from '@hooks/useCart'
 
 import Animated, { Easing, Keyframe } from 'react-native-reanimated'
-import { Dimensions } from 'react-native'
+import { Dimensions, StatusBar } from 'react-native'
 
 type RouteParamsProps = {
   productId: string
@@ -160,6 +160,11 @@ export function Details() {
         <Loading />
       ) : (
         <ScrollView>
+          <StatusBar
+            barStyle="light-content"
+            backgroundColor="transparent"
+            translucent
+          />
           <VStack height={575} pt={44} backgroundColor={THEME.colors.GRAY100}>
             <Header variant={'BackButton'} />
 
