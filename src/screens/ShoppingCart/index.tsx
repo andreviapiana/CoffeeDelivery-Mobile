@@ -43,6 +43,11 @@ export function ShoppingCart() {
     navigation.navigate('finish')
   }
 
+  // Navegação p/ a Home (ver produtos) //
+  function handleHome() {
+    navigation.navigate('home', {})
+  }
+
   // Função de Remover o Item do Carrinho //
   const toast = useToast()
   async function handleItemRemove(uniqueId: string) {
@@ -113,7 +118,11 @@ export function ShoppingCart() {
               Seu carrinho está vazio
             </Text>
 
-            <Button title={'VER CATÁLOGO'} variant={'secondary'} />
+            <Button
+              title={'VER CATÁLOGO'}
+              variant={'secondary'}
+              onPress={handleHome}
+            />
           </Center>
         ) : (
           <FlatList
