@@ -1,24 +1,20 @@
 import { PressableProps, Text, Pressable } from 'react-native'
 
-import { useState } from 'react'
 import { THEME } from '@theme'
 import { styles } from './styles'
 
 type Props = PressableProps & {
   text: string
+  isActive: boolean
 }
 
-export function CategoryButtonTag({ text, ...rest }: Props) {
-  const [isPressed, setIsPressed] = useState(false)
-
+export function CategoryButtonTag({ text, isActive, ...rest }: Props) {
   return (
     <Pressable
-      onPressIn={() => setIsPressed(true)}
-      onPressOut={() => setIsPressed(false)}
       style={[
         styles.container,
         {
-          backgroundColor: isPressed
+          backgroundColor: isActive
             ? THEME.colors.PURPLE
             : THEME.colors.GRAY900,
           borderColor: THEME.colors.PURPLE,
@@ -31,7 +27,7 @@ export function CategoryButtonTag({ text, ...rest }: Props) {
         style={[
           styles.text,
           {
-            color: isPressed ? THEME.colors.WHITE : THEME.colors.PURPLE_DARK,
+            color: isActive ? THEME.colors.WHITE : THEME.colors.PURPLE_DARK,
           },
         ]}
       >

@@ -15,10 +15,13 @@ import Animated, {
 
 type HeaderProps = {
   variant: 'Location' | 'BackButton' | 'Title'
-  scrollValue?: SharedValue<any>
+  introContainerPosition?: SharedValue<number>
 }
 
-export function Header({ variant = 'Location', scrollValue }: HeaderProps) {
+export function Header({
+  variant = 'Location',
+  introContainerPosition = undefined,
+}: HeaderProps) {
   // useCart p/ capturar a quandidade de itens e exibir no Header //
   const { cart } = useCart()
 
@@ -38,24 +41,18 @@ export function Header({ variant = 'Location', scrollValue }: HeaderProps) {
   // Animação do Texto do Header (mudança de cor) //
   const headerTextStyle = useAnimatedStyle(() => {
     return {
-      color: interpolateColor(
-        scrollValue?.value,
-        [0, 320],
-        [THEME.colors.WHITE, THEME.colors.GRAY200],
-      ),
+      color:
+        introContainerPosition &&
+        interpolateColor(
+          introContainerPosition.value,
+          [0, -180],
+          [THEME.colors.WHITE, THEME.colors.GRAY200],
+        ),
     }
   })
 
   return (
-    <HStack
-      px={8}
-      py={5}
-      borderBottomColor={
-        variant === 'Title' ? THEME.colors.GRAY500 : THEME.colors.GRAY100
-      }
-      borderBottomWidth={1}
-      justifyContent={'space-between'}
-    >
+    <HStack px={8} py={5} justifyContent={'space-between'}>
       {variant === 'Location' ? (
         <HStack width={'150px'}>
           <Icon
