@@ -27,18 +27,19 @@ Complementando, toda ela funciona com o uso do Async Storage, ou seja, se você 
 ___
 
 ## 🎨 Layout
-Imagens da aplicação são vistas abaixo:
+A imagem de Capa da aplicação é vista abaixo:
 
-![Capa](https://github.com/andreviapiana/IgniteGym/assets/106932234/d7579d03-88a4-435f-a6fc-22da1c22e25f)
-
-___
+![Cover](https://github.com/andreviapiana/CoffeeDelivery-Mobile/assets/106932234/2b64cc01-be62-4242-8189-80e21c58135f)
 
 ___
 
-## 🎨 Protótipo
+## 🎨 Protótipo e Figma
 Deseja ver o projeto em uso sem instalar nada? Acesse o protótipo a seguir:
 
 - [Protótipo Interativo](https://www.figma.com/proto/1hOL64eyp4FVjvMnLnyS2h/Coffee-Delivery-%E2%80%A2-Desafio-React-Native-(Community)-(Copy)?node-id=729-1899&scaling=scale-down&page-id=735%3A3292&starting-point-node-id=729%3A1826)
+
+Deseja ver todas as telas e composição do projeto? Acesse o Figma dele a seguir:
+- [Figma](https://www.figma.com/file/1hOL64eyp4FVjvMnLnyS2h/Coffee-Delivery-%E2%80%A2-Desafio-React-Native-(Community)-(Copy)?node-id=735%3A3292&mode=dev)
 
 ___
 
