@@ -29,6 +29,8 @@ import Animated, {
 } from 'react-native-reanimated'
 import { Swipeable } from 'react-native-gesture-handler'
 
+import * as Haptics from 'expo-haptics'
+
 const SCREEN_WIDTH = Dimensions.get('screen').width
 
 export function ShoppingCart() {
@@ -53,6 +55,8 @@ export function ShoppingCart() {
   async function handleItemRemove(uniqueId: string) {
     try {
       await removeProductCart(uniqueId)
+
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
 
       toast.show({
         title: 'Produto removido',

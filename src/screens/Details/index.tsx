@@ -31,6 +31,9 @@ import { useCart } from '@hooks/useCart'
 import Animated, { Easing, Keyframe } from 'react-native-reanimated'
 import { Dimensions, StatusBar } from 'react-native'
 
+import * as Haptics from 'expo-haptics'
+import { Audio } from 'expo-av'
+
 type RouteParamsProps = {
   productId: string
 }
@@ -81,6 +84,7 @@ export function Details() {
   async function handleAddToCart() {
     if (!sizeSelected) {
       setIsError(true)
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error)
       return
     }
     try {
@@ -101,6 +105,9 @@ export function Details() {
       })
 
       navigation.navigate('cart')
+
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+      playSound()
     } catch (error) {
       toast.show({
         title: 'Não foi possível adicionar o produto no carrinho',
@@ -108,6 +115,17 @@ export function Details() {
         bgColor: 'red.500',
       })
     }
+  }
+
+  // Função de Tocar o Som //
+  async function playSound() {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const file = require('../../assets/cash-sound.mp3')
+
+    const { sound } = await Audio.Sound.createAsync(file, { shouldPlay: true })
+
+    await sound.setPositionAsync(0)
+    await sound.playAsync()
   }
 
   // Loading //

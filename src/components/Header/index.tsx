@@ -29,7 +29,7 @@ export function Header({
   const navigation = useNavigation()
 
   function handleGoBack() {
-    navigation.goBack()
+    navigation.navigate('home', {})
   }
 
   // Navegando p/ o Carrinho //

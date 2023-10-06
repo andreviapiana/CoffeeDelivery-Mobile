@@ -101,7 +101,6 @@ export function Home() {
   // Função do Scroll das Categorias //
   const handleScrollToSection = (category: string) => {
     const index = listSection.findIndex((item) => item.title === category)
-    console.log(index)
     if (index !== -1 && sectionListRef.current) {
       sectionListRef.current.scrollToLocation({
         sectionIndex: index,
